@@ -4,7 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 
 import styles from './styles'; 
 
@@ -61,27 +61,36 @@ function HomeScreen({ navigation }) {
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="HOME">
+
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+
+              if (route.name === 'QR scanner') {
+                iconName = focused
+                  ? 'apps'
+                  : 'apps-outline';
+              } else if (route.name === 'Service') {              
+                iconName = focused
+                ? 'key'
+                : 'key-outline';
+              } else if (route.name === 'Overview') {              
+                iconName = focused
+                ? 'construct'
+                : 'construct-outline';
+              }
+
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: 'tomato',
+            tabBarInactiveTintColor: 'gray',
+          })}
+        >
+
         <Tab.Screen name="QR scanner" component={HomeScreen} />
         <Tab.Screen name="Service" component={ServiceScreen} />
-        {/* <Tab.Screen name="Service" component={ServiceScreen} options={{ title: "SERWIS",        
-          headerLeft: () => (
-            <Text></Text>
-          ),
-          headerRight: () => (
-            <Button
-              onPress={() =>alert('Right pressed')}
-              title="Przeglądy >"
-              color="blue"
-            />
-          ),
-          headerStyle: {
-            backgroundColor: '#F4EFC9',
-          },
-          headerTintColor: 'black',
-          headerTitleStyle: {
-            fontWeight: 'bold'
-          } }} />         */}
         <Tab.Screen name="Overview" component={OverviewScreen} />  
 
       </Tab.Navigator>
