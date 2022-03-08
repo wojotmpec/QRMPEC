@@ -4,6 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import styles from './styles'; 
 
