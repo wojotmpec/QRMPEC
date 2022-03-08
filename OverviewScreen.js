@@ -7,7 +7,6 @@ import Checkbox from 'expo-checkbox';
 import {Picker} from '@react-native-picker/picker';
 import styles from './styles'; 
 
-
 import * as SQLite from 'expo-sqlite'
 const db = SQLite.openDatabase('db.QRProject')
 
