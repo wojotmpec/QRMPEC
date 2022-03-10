@@ -82,7 +82,7 @@ function ServiceScreen({route, navigation}) {
       
     return (
       <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center', fontSize: 40 }}>      
-        <Text style={{fontSize: 20}}>{"\n"}{nodeDetails.split(';;;')[2]} {"\n"}{"\n"}</Text>
+        <Text style={{fontSize: 20}}>{"\n"}{nodeDetails.split(';;;')[2]} {"                "}{"\n"}{"\n"}</Text>
       
           <Picker
             selectedValue={selectedValue}
@@ -109,13 +109,13 @@ function ServiceScreen({route, navigation}) {
             <Picker.Item label="zgłoszenie" value="18" />
             <Picker.Item label="zmiana krzywej" value="27" />
             <Picker.Item label="zmiana parametrów" value="26" />
-          </Picker>
-    
-    
+          </Picker>       
   
         <TextInput
           onChangeText={onChangeText}
           value={text}
+          multiline={true}
+          numberOfLines={4}
           style={styles.input}
         />
   
@@ -124,5 +124,5 @@ function ServiceScreen({route, navigation}) {
       </View>
     );
   }
-
+  
   export default ServiceScreen  ;

@@ -8,11 +8,14 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
+      width: 240,
+      height: 90,
       padding: 10,
-    }
+      marginTop: 5,
+      marginBottom: 5,
+      backgroundColor: '#e8e8e8',
+      fontSize: 18
+    }    
   });
 
   export default styles;

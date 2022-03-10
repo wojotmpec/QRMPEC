@@ -10,6 +10,7 @@ import styles from './styles';
 
 import ServiceScreen from './ServiceScreen';
 import OverviewScreen from './OverviewScreen';
+import SynchScreen from './SynchScreen';
 
 import * as SQLite from 'expo-sqlite'
 const db = SQLite.openDatabase('db.QRProject')
@@ -37,6 +38,7 @@ function HomeScreen({ navigation }) {
     navigation.navigate('Overview', {
       nodeDetails: data
     });
+    navigation.navigate('Synch');    
  //   alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
@@ -79,6 +81,10 @@ export default function App() {
                 iconName = focused
                 ? 'construct'
                 : 'construct-outline';
+              } else if (route.name === 'Synch') {              
+                iconName = focused
+                ? 'repeat'
+                : 'repeat-outline';
               }
 
               // You can return any component that you like here!
@@ -92,6 +98,7 @@ export default function App() {
         <Tab.Screen name="QR scanner" component={HomeScreen} />
         <Tab.Screen name="Service" component={ServiceScreen} />
         <Tab.Screen name="Overview" component={OverviewScreen} />  
+        <Tab.Screen name="Synch" component={SynchScreen} />  
 
       </Tab.Navigator>
     </NavigationContainer>
