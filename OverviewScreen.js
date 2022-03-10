@@ -18,8 +18,13 @@ function OverviewScreen({route, navigation}) {
     const [text, onChangeText] = useState("");
     
     const handleSubmit = () => {
-      console.log('okx');
-  
+
+
+      let val1 = 0;
+      if(isChecked == 1) {
+        val1 = 1;
+      }
+      console.log('okx' + 'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ nodeDetails.split(';;;')[0] + ',' + nodeDetails.split(';;;')[1] + ',' + val1 + ',' + JSON.stringify(text) + ',0' + ')');
       db.transaction(tx => {
   
        // tx.executeSql(
@@ -30,7 +35,7 @@ function OverviewScreen({route, navigation}) {
         )
   
         tx.executeSql(
-          'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ nodeDetails.split(';;;')[0] + ',' + nodeDetails.split(';;;')[1] + ',' + isChecked + ',' + JSON.stringify(text) + ',0' + ')'
+          'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ nodeDetails.split(';;;')[0] + ',' + nodeDetails.split(';;;')[1] + ',' + val1 + ',' + JSON.stringify(text) + ',0' + ')'
         )
       })  
     }
