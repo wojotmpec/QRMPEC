@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Button, TextInput } from 'react-native';
+import { Text, View, StyleSheet, Button, TextInput, ToastAndroid} from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -50,8 +50,22 @@ function SynchScreen({navigation}) {
                     'UPDATE serwis SET status=1 WHERE status = 0;'
                   )
                   console.log( 'DONE')
+                  ToastAndroid.showWithGravityAndOffset(
+                    "Synchronizacja przebiegła pomyślnie!",
+                    ToastAndroid.LONG,
+                    ToastAndroid.TOP,
+                    25,
+                    50
+                  );
                 } else {
                   console.log( 'FAILED')
+                  ToastAndroid.showWithGravityAndOffset(
+                    "Nie udało sie zsynchronizować!",
+                    ToastAndroid.LONG,
+                    ToastAndroid.TOP,
+                    25,
+                    50
+                  );
                 }        
               }) 
                console.log( 'EEE'+ successVal)

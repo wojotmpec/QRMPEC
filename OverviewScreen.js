@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TextInput } from 'react-native';
+import { Text, View, StyleSheet, Button, TextInput, ToastAndroid} from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -24,7 +24,7 @@ function OverviewScreen({route, navigation}) {
       if(isChecked == 1) {
         val1 = 1;
       }
-      console.log('okx' + 'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ nodeDetails.split(';;;')[0] + ',' + nodeDetails.split(';;;')[1] + ',' + val1 + ',' + JSON.stringify(text) + ',0' + ')');
+      
       db.transaction(tx => {
   
        // tx.executeSql(
@@ -37,6 +37,14 @@ function OverviewScreen({route, navigation}) {
         tx.executeSql(
           'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ nodeDetails.split(';;;')[0] + ',' + nodeDetails.split(';;;')[1] + ',' + val1 + ',' + JSON.stringify(text) + ',0' + ')'
         )
+
+        ToastAndroid.showWithGravityAndOffset(
+          "Zapisano pomyślnie!",
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+          25,
+          50
+        );
       })  
     }
       

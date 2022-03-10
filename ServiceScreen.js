@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TextInput } from 'react-native';
+import { Text, View, StyleSheet, Button, TextInput, ToastAndroid } from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -37,6 +37,14 @@ function ServiceScreen({route, navigation}) {
         tx.executeSql(
           'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ nodeDetails.split(';;;')[0] + ',' + nodeDetails.split(';;;')[1] + ',' + selectedValue + ',' + JSON.stringify(text) + ',0' + ')'
         ) 
+
+        ToastAndroid.showWithGravityAndOffset(
+          "Zapisano pomyślnie!",
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+          25,
+          50
+        );
       })
   
   
