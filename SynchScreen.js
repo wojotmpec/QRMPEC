@@ -72,6 +72,13 @@ function SynchScreen({navigation}) {
              }).catch(error => {
               // enter your logic for when there is an error (ex. error toast)
                console.log(error)
+               ToastAndroid.showWithGravityAndOffset(
+                "Problem z synchronizacją, brak połączenia!",
+                ToastAndroid.LONG,
+                ToastAndroid.TOP,
+                25,
+                50
+              );
              }) 
   
         })
