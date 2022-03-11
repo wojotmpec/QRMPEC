@@ -41,7 +41,7 @@ function HomeScreen({ navigation }) {
       if (!(Number.isInteger(Number.parseInt(dataArr[0])) && dataArr[0] > 0)) {
         ToastAndroid.showWithGravityAndOffset(
           "Pierwszy parametr jest nieprawidłowy!",
-          ToastAndroid.LONG,
+          ToastAndroid.SHORT,
           ToastAndroid.CENTER,
           25,
           50
@@ -49,7 +49,7 @@ function HomeScreen({ navigation }) {
       } else if (!(Number.isInteger(Number.parseInt(dataArr[1])) && dataArr[1] > 0)) {
         ToastAndroid.showWithGravityAndOffset(
           "Drugi parametr jest nieprawidłowy!",
-          ToastAndroid.LONG,
+          ToastAndroid.SHORT,
           ToastAndroid.CENTER,
           25,
           50
@@ -57,7 +57,7 @@ function HomeScreen({ navigation }) {
       } else if (dataArr[2].length < 3) {
         ToastAndroid.showWithGravityAndOffset(
           "Trzeci parametr jest za krótki!",
-          ToastAndroid.LONG,
+          ToastAndroid.SHORT,
           ToastAndroid.CENTER,
           25,
           50
