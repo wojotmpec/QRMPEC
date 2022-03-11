@@ -17,8 +17,7 @@ const Stack = createNativeStackNavigator();
 function ServiceScreen({route, navigation}) {
   
     const { nodeDetails } = route.params;
-    const [isChecked, setChecked] = useState(false);
-    const [selectedValue, setSelectedValue] = useState("awaria");
+    const [selectedValue, setSelectedValue] = useState("1");
     const [text, onChangeText] = useState("");
     
     const handleSubmit = () => {
@@ -56,6 +55,7 @@ function ServiceScreen({route, navigation}) {
       
           <Picker
             selectedValue={selectedValue}
+//            selectedValue={1}
             style={{ height: 100, width: 250 }}
             onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
           >

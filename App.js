@@ -32,13 +32,13 @@ function HomeScreen({ navigation }) {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    navigation.navigate('Synch');   
+    navigation.navigate('Overview', {
+      nodeDetails: data
+    });     
     navigation.navigate('Service', {
       nodeDetails: data
     });
-    navigation.navigate('Overview', {
-      nodeDetails: data
-    });
-    navigation.navigate('Synch');    
  //   alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 

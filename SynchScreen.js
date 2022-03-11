@@ -16,6 +16,7 @@ function SynchScreen({navigation}) {
 
       var dataArray = Array();
       var successVal = '0';
+      var isData = 0;
       db.transaction(tx => {
    
         tx.executeSql('SELECT * FROM serwis WHERE status = 0', [], (trans, result) => {
@@ -23,9 +24,10 @@ function SynchScreen({navigation}) {
           for (let i = 0; i < result.rows.length; ++i) {
             let values = result.rows._array[i];
             dataArray.push({rodzaj: values['rodzaj'], wID: values['w_id'], serwisID: values['serwis_id'], opis: values['opis'], status: values['status'], timeService: values['Timestamp']})
+            isData = 1;
           }
           console.log(dataArray);
-           
+          if(isData == 1) {
               let res = fetch('http://hercules8.mpec.krakow.pl/postCreate.php', {
               method: 'POST',
               headers: {
@@ -73,16 +75,20 @@ function SynchScreen({navigation}) {
               // enter your logic for when there is an error (ex. error toast)
                console.log(error)
              }) 
+            } else {
+              ToastAndroid.showWithGravityAndOffset(
+                "Brak danych do przesłania !",
+                ToastAndroid.LONG,
+                ToastAndroid.TOP,
+                25,
+                50
+              );              
+            }
   
         })
+       
       }) 
-
-
-
     }
-      
-
-  
 
     return (
       <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center', fontSize: 40 }}>      
