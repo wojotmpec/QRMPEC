@@ -34,7 +34,7 @@ function ServiceScreen({route, navigation}) {
         )
   
         tx.executeSql(
-          'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ nodeDetails.split(';;;')[0] + ',' + nodeDetails.split(';;;')[1] + ',' + selectedValue + ',' + JSON.stringify(text) + ',0' + ')'
+          'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + selectedValue + ',' + JSON.stringify(text) + ',0' + ')'
         ) 
 
         ToastAndroid.showWithGravityAndOffset(

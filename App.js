@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TextInput } from 'react-native';
+import { Text, View, StyleSheet, Button, TextInput, ToastAndroid } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
@@ -30,16 +30,57 @@ function HomeScreen({ navigation }) {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    navigation.navigate('Synch');   
-    navigation.navigate('Overview', {
-      nodeDetails: data
-    });     
-    navigation.navigate('Service', {
-      nodeDetails: data
-    });
- //   alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  const handleBarCodeScanned = ({
+    type,
+    data
+  }) => {
+
+    var dataArr = data.split(';;;');
+
+    if (dataArr.length == 3) {
+      if (!(Number.isInteger(Number.parseInt(dataArr[0])) && dataArr[0] > 0)) {
+        ToastAndroid.showWithGravityAndOffset(
+          "Pierwszy parametr jest nieprawidłowy!",
+          ToastAndroid.LONG,
+          ToastAndroid.CENTER,
+          25,
+          50
+        );
+      } else if (!(Number.isInteger(Number.parseInt(dataArr[1])) && dataArr[1] > 0)) {
+        ToastAndroid.showWithGravityAndOffset(
+          "Drugi parametr jest nieprawidłowy!",
+          ToastAndroid.LONG,
+          ToastAndroid.CENTER,
+          25,
+          50
+        );
+      } else if (dataArr[2].length < 3) {
+        ToastAndroid.showWithGravityAndOffset(
+          "Trzeci parametr jest za krótki!",
+          ToastAndroid.LONG,
+          ToastAndroid.CENTER,
+          25,
+          50
+        );
+      } else {
+        setScanned(true);
+        navigation.navigate('Synch');
+        navigation.navigate('Overview', {
+          nodeDetails: data
+        });
+        navigation.navigate('Service', {
+          nodeDetails: data
+        });
+      }
+    } else {
+      ToastAndroid.showWithGravityAndOffset(
+        "Nieprawidłowy kod QR!",
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER,
+        25,
+        50
+      );
+    }
   };
 
   if (hasPermission === null) {
