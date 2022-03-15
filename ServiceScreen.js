@@ -50,12 +50,15 @@ function ServiceScreen({route, navigation}) {
     }
       
     if(nodeDetails == '') {
-      return (<Text style={{flex: 0, alignItems: 'center', fontSize: 20, justifyContent: 'center'}}>{"\n"}UPS</Text>);
+      return (
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>Musisz zeskanować najpierw obiekt</Text>
+        </View>);
     } else {
 
     return (
-      <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center', fontSize: 40 }}>      
-        <Text style={{fontSize: 20}}>{"\n"}{nodeDetails.split(';;;')[2]} {"                "}{"\n"}{"\n"}</Text>
+      <View style={styles.mainContainer}>      
+        <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
       
           <Picker
             selectedValue={selectedValue}
