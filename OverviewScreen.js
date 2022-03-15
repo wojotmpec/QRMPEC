@@ -13,58 +13,65 @@ const Stack = createNativeStackNavigator();
 
 function OverviewScreen({route, navigation}) {
   
-    const { nodeDetails } = route.params;
-    const [isChecked, setChecked] = useState(false);
-    const [text, onChangeText] = useState("");
-    
-    const handleSubmit = () => {
-
-
-      let val1 = 0;
-      if(isChecked == 1) {
-        val1 = 1;
-      }
-      
-      db.transaction(tx => {
+  const { nodeDetails } = route.params;
+  const [isChecked, setChecked] = useState(false);
+  const [text, onChangeText] = useState("");
   
-       // tx.executeSql(
-       //   'DROP TABLE serwis'
-       // )
-        tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
-        )
-  
-        tx.executeSql(
-          'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + val1 + ',' + JSON.stringify(text) + ',0' + ')'
-        )
+  const handleSubmit = () => {
 
-        ToastAndroid.showWithGravityAndOffset(
-          "Zapisano pomyślnie!",
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-          25,
-          50
-        );
-      })  
+
+    let val1 = 0;
+    if(isChecked == 1) {
+      val1 = 1;
     }
+    
+    db.transaction(tx => {
+
+      // tx.executeSql(
+      //   'DROP TABLE serwis'
+      // )
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
+      )
+
+      tx.executeSql(
+        'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + val1 + ',' + JSON.stringify(text) + ',0' + ')'
+      )
+
+      ToastAndroid.showWithGravityAndOffset(
+        "Zapisano pomyślnie!",
+        ToastAndroid.LONG,
+        ToastAndroid.TOP,
+        25,
+        50
+      );
+    })  
+  }
       
+  if(nodeDetails == '') {
     return (
-      <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center', fontSize: 40 }}>      
-        <Text style={{fontSize: 20}}>{"\n"}{nodeDetails.split(';;;')[2]} {"\n"}{"\n"}</Text>
-  
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText}>Musisz zeskanować najpierw obiekt</Text>
+      </View>);
+    } else {
+
+    return (
+      <View style={styles.mainContainer}>      
+        <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
+
         <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
         <Text>{isChecked ? 'true':'false'}przegląd turbiny{'\n\n'}</Text>   
-  
+
         <TextInput
-          onChangeText={onChangeText}
+          onChangeText={onChangeText} 
           value={text}
           style={styles.input}
         />
-  
+
         <Button onPress={handleSubmit} title="Zapisz" />
-  
-      </View>
-    );
+
+      </View>);
+    }
   }
 
-  export default OverviewScreen  ;
+export default OverviewScreen  ;

@@ -6,7 +6,7 @@ import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
-import styles from './styles'; 
+import styles from './styles';  
 
 import ServiceScreen from './ServiceScreen';
 import OverviewScreen from './OverviewScreen';
@@ -30,13 +30,13 @@ function HomeScreen({ navigation }) {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
-      navigation.navigate('Overview', {
+      navigation.navigate('Przeglądy', {
         nodeDetails: ''
       });
-      navigation.navigate('Service', {
+      navigation.navigate('Serwisy', {
         nodeDetails: ''
       });
-      navigation.navigate('QR scanner');
+      navigation.navigate('Skaner kodu QR');
 
     })();
   }, []);
@@ -81,11 +81,11 @@ function HomeScreen({ navigation }) {
         
         setScanned(true);
         
-        navigation.navigate('Synch');
-        navigation.navigate('Overview', {
+        navigation.navigate('Synchronizacja');
+        navigation.navigate('Przeglądy', {
           nodeDetails: data
         });
-        navigation.navigate('Service', {
+        navigation.navigate('Serwisy', {
           nodeDetails: data
         });
         
@@ -118,7 +118,7 @@ function HomeScreen({ navigation }) {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />}
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      {scanned && <Button title={'Skanuj nowy obiekt'} onPress={() => setScanned(false)} />}
     </View>
   );
 }
@@ -127,41 +127,46 @@ export default function App() {
   return (
     <NavigationContainer>
 
-        <Tab.Navigator
+        <Tab.Navigator  
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
 
-              if (route.name === 'QR scanner') {
+              if (route.name === 'Skaner kodu QR') {
                 iconName = focused
                   ? 'apps'
                   : 'apps-outline';
-              } else if (route.name === 'Service') {              
+              } else if (route.name === 'Serwisy') {              
                 iconName = focused
                 ? 'key'
                 : 'key-outline';
-              } else if (route.name === 'Overview') {              
+              } else if (route.name === 'Przeglądy') {              
                 iconName = focused
                 ? 'construct'
                 : 'construct-outline';
-              } else if (route.name === 'Synch') {              
+              } else if (route.name === 'Synchronizacja') {              
                 iconName = focused
                 ? 'repeat'
                 : 'repeat-outline';
               }
 
               // You can return any component that you like here!
-              return <Ionicons name={iconName} size={size} color={color} />;
+              return <Ionicons name={iconName} size={50} color={color} />;
             },
             tabBarActiveTintColor: 'tomato',
             tabBarInactiveTintColor: 'gray',
+            tabBarStyle: { height:120, size: 150 },
+            tabBarLabelStyle: {
+              fontSize: 22,
+            },
+            tabBarLabelPosition:'below-icon',
           })}
         >
 
-        <Tab.Screen name="QR scanner" component={HomeScreen} />        
-        <Tab.Screen name="Service" component={ServiceScreen} />
-        <Tab.Screen name="Overview" component={OverviewScreen} />  
-        <Tab.Screen name="Synch" component={SynchScreen} />  
+        <Tab.Screen name="Skaner kodu QR" component={HomeScreen} />        
+        <Tab.Screen name="Serwisy" component={ServiceScreen} />
+        <Tab.Screen name="Przeglądy" component={OverviewScreen} />  
+        <Tab.Screen name="Synchronizacja" component={SynchScreen} />  
 
       </Tab.Navigator>
     </NavigationContainer>
