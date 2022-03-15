@@ -49,6 +49,10 @@ function ServiceScreen({route, navigation}) {
   
     }
       
+    if(nodeDetails == '') {
+      return (<Text style={{flex: 0, alignItems: 'center', fontSize: 20, justifyContent: 'center'}}>{"\n"}UPS</Text>);
+    } else {
+
     return (
       <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center', fontSize: 40 }}>      
         <Text style={{fontSize: 20}}>{"\n"}{nodeDetails.split(';;;')[2]} {"                "}{"\n"}{"\n"}</Text>
@@ -94,5 +98,6 @@ function ServiceScreen({route, navigation}) {
       </View>
     );
   }
+}
   
   export default ServiceScreen  ;

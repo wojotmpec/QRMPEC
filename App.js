@@ -23,10 +23,20 @@ function HomeScreen({ navigation }) {
   const [scanned, setScanned] = useState(false);
   const isFocused = useIsFocused(); 
 
+//  const [nodeDetails, setNodeDetails] = useState('');
+
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
+      navigation.navigate('Overview', {
+        nodeDetails: ''
+      });
+      navigation.navigate('Service', {
+        nodeDetails: ''
+      });
+      navigation.navigate('QR scanner');
+
     })();
   }, []);
 
@@ -36,7 +46,7 @@ function HomeScreen({ navigation }) {
   }) => {
 
     var dataArr = data.split(';;;');
-
+    
     if (dataArr.length == 3) {
       if (!(Number.isInteger(Number.parseInt(dataArr[0])) && dataArr[0] > 0)) {
         ToastAndroid.showWithGravityAndOffset(
@@ -64,6 +74,7 @@ function HomeScreen({ navigation }) {
         );
       } else {
         setScanned(true);
+        
         navigation.navigate('Synch');
         navigation.navigate('Overview', {
           nodeDetails: data
@@ -71,6 +82,7 @@ function HomeScreen({ navigation }) {
         navigation.navigate('Service', {
           nodeDetails: data
         });
+        
       }
     } else {
       ToastAndroid.showWithGravityAndOffset(
@@ -81,6 +93,7 @@ function HomeScreen({ navigation }) {
         50
       );
     }
+    
   };
 
   if (hasPermission === null) {
@@ -136,7 +149,7 @@ export default function App() {
           })}
         >
 
-        <Tab.Screen name="QR scanner" component={HomeScreen} />
+        <Tab.Screen name="QR scanner" component={HomeScreen} />        
         <Tab.Screen name="Service" component={ServiceScreen} />
         <Tab.Screen name="Overview" component={OverviewScreen} />  
         <Tab.Screen name="Synch" component={SynchScreen} />  
