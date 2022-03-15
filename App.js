@@ -17,13 +17,14 @@ const db = SQLite.openDatabase('db.QRProject')
 
 const Tab = createBottomTabNavigator();
 
+const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
+
 function HomeScreen({ navigation }) {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const isFocused = useIsFocused(); 
-
-//  const [nodeDetails, setNodeDetails] = useState('');
+  var dataTMP = '';    
 
   useEffect(() => {
     (async () => {
@@ -45,6 +46,10 @@ function HomeScreen({ navigation }) {
     data
   }) => {
 
+    if(dataTMP == data) {
+      return;
+    }  
+    dataTMP = data;
     var dataArr = data.split(';;;');
     
     if (dataArr.length == 3) {
@@ -73,6 +78,7 @@ function HomeScreen({ navigation }) {
           50
         );
       } else {
+        
         setScanned(true);
         
         navigation.navigate('Synch');
@@ -93,7 +99,10 @@ function HomeScreen({ navigation }) {
         50
       );
     }
-    
+
+    setTimeout(() => {
+      dataTMP = '';
+    }, 2000);
   };
 
   if (hasPermission === null) {
