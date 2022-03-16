@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TextInput, ToastAndroid} from 'react-native';
+import React, { useState, } from 'react';
+import { Text, View, TextInput, ToastAndroid, TouchableOpacity} from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -50,9 +50,11 @@ function OverviewScreen({route, navigation}) {
       
   if(nodeDetails == '') {
     return (
-      <View style={styles.emptyContainer}>
+      <View style={styles.emptyView}>
+      <TouchableOpacity onPress={() => navigation.navigate('Skaner kodu QR')}>
         <Text style={styles.emptyText}>Musisz zeskanować najpierw obiekt</Text>
-      </View>);
+      </TouchableOpacity> 
+    </View>);
     } else {
 
     return (
@@ -68,7 +70,9 @@ function OverviewScreen({route, navigation}) {
           style={styles.input}
         />
 
-        <Button onPress={handleSubmit} title="Zapisz" />
+        <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
+          <Text style={styles.saveText}>Zapisz przegląd</Text>
+        </TouchableOpacity> 
 
       </View>);
     }

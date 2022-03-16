@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TextInput, ToastAndroid } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Checkbox from 'expo-checkbox';
 import {Picker} from '@react-native-picker/picker';
 import styles from './styles'; 
 
@@ -51,8 +50,10 @@ function ServiceScreen({route, navigation}) {
       
     if(nodeDetails == '') {
       return (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>Musisz zeskanować najpierw obiekt</Text>
+        <View style={styles.emptyView}>
+          <TouchableOpacity onPress={() => navigation.navigate('Skaner kodu QR')}>
+            <Text style={styles.emptyText}>Musisz zeskanować najpierw obiekt</Text>
+          </TouchableOpacity> 
         </View>);
     } else {
 
@@ -62,7 +63,7 @@ function ServiceScreen({route, navigation}) {
       
           <Picker
             selectedValue={selectedValue}
-            style={{width: 300, height: 100}} 
+            style={styles.picker} 
             onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
           >
             <Picker.Item label="awaria" value="13" />
@@ -90,12 +91,14 @@ function ServiceScreen({route, navigation}) {
         <TextInput
           onChangeText={onChangeText}
           value={text}
-          multiline={true}
+          multiline
           numberOfLines={4}
           style={styles.input}
         />
   
-        <Button onPress={handleSubmit} title="Zapisz" style={styles.buttonSave}/>
+        <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
+          <Text style={styles.saveText}>Zapisz serwis</Text>
+        </TouchableOpacity> 
        
       </View>
     );

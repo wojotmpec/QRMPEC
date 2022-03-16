@@ -9,30 +9,31 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  input: {
-    width: 240,
-    height: 90,
-    padding: 10,
-    marginBottom: 5,
-    backgroundColor: '#e8e8e8',
-    fontSize: 18
-  },
-  emptyContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    margin: 10,
+  emptyView: {
+    alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
   },
   emptyText: {
-    flex: 0,
-    alignItems: 'center',
-    fontSize: 20,
-    justifyContent: 'center',
     backgroundColor: 'tomato',
-    height: 100,
-    paddingTop: 30,
+    paddingTop: 40,
+    paddingBottom: 40,
     paddingLeft: 20,
     paddingRight: 20,
+    width: "100%",
+  },
+  syncView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  syncText: {
+    backgroundColor: '#DAF7A6',
+    paddingTop: 40,
+    paddingBottom: 40,
+    paddingLeft: 50,
+    paddingRight: 50,
+    width: "100%",
   },
   addressText: {
     flex: 0,
@@ -49,23 +50,44 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 40,
   },
   scanAgainButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#DAF7A6',
-    height: '10%',
-    marginTop: 10,
   },
   scanAgainText: {
-    fontSize:30
+    backgroundColor: '#DAF7A6',
+    paddingTop: 40,
+    paddingBottom: 40,
+    paddingLeft: 50,
+    paddingRight: 50,
   },
-  buttonSave: {
-    width: '100%',
+  saveTouchable: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 50,
+  },
+  saveText: {
+    backgroundColor: '#DAF7A6',
     paddingTop: 30,
     paddingBottom: 30,
-  },  
+    paddingLeft: 100,
+    paddingRight: 100,
+    width: "100%",
+  },
+  picker: {
+    width: '50%',
+    height: 150
+  },
+  input: {
+    width: '100%',
+    padding: 10,
+    backgroundColor: '#bababa',
+    borderBottomColor: '#ababab',
+    borderBottomWidth: 1,
+    borderTopColor: '#d4d4d4',
+    borderTopWidth: 1,
+  }
 });
 
 export default styles;

@@ -1,7 +1,7 @@
-import { Text, View, StyleSheet, Button, TextInput, ToastAndroid} from 'react-native';
+import { Text, View, ToastAndroid, TouchableOpacity} from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import styles from './styles'; 
 
 import * as SQLite from 'expo-sqlite'
 const db = SQLite.openDatabase('db.QRProject')
@@ -102,10 +102,12 @@ function SynchScreen({navigation}) {
     }
 
     return (
-      <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center', fontSize: 40 }}>      
-      <Text>{"\n"}{"\n"}</Text>
-      <Button onPress={handleSubmit} title="Synchronizuj" />
-  
+      <View  style={styles.syncView}>
+
+        <TouchableOpacity onPress={handleSubmit}>
+          <Text style={styles.syncText}>Synchronizuj</Text>
+        </TouchableOpacity> 
+
       </View>
     );
   }

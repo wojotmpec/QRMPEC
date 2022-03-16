@@ -13,11 +13,10 @@ import OverviewScreen from './OverviewScreen';
 import SynchScreen from './SynchScreen';
 
 import * as SQLite from 'expo-sqlite'
+import { createContext } from 'react/cjs/react.production.min';
 const db = SQLite.openDatabase('db.QRProject')
 
 const Tab = createBottomTabNavigator();
-
-const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 function HomeScreen({ navigation }) {
 
@@ -102,7 +101,7 @@ function HomeScreen({ navigation }) {
 
     setTimeout(() => {
       dataTMP = '';
-    }, 6000);
+    }, 2000);
   };
 
   if (hasPermission === null) {
@@ -121,7 +120,7 @@ function HomeScreen({ navigation }) {
       {/* {scanned && <Button style={styles.button} title={'Skanuj nowy obiekt'} onPress={() => setScanned(false)} />}    */}
 
       {scanned && <TouchableOpacity onPress={() => setScanned(false)} style={styles.scanAgainButton}>
-          <Text style={styles.scanAgainText}>Skanuj nowy obiekt</Text>
+          <Text style={styles.scanAgainText}>Kliknij aby zeskanować nowy obiekt</Text>
       </TouchableOpacity>}
 
     </View>
@@ -131,7 +130,6 @@ function HomeScreen({ navigation }) {
 export default function App() {
   return (
     <NavigationContainer>
-
         <Tab.Navigator  
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
@@ -156,15 +154,14 @@ export default function App() {
               }
 
               // You can return any component that you like here!
-              return <Ionicons name={iconName} size={50} color={color} />;
+              return <Ionicons name={iconName} size={40} color={color} />;
             },
             tabBarActiveTintColor: 'tomato',
             tabBarInactiveTintColor: 'gray',
-            tabBarStyle: { height:120, size: 150 },
-            tabBarLabelStyle: {
-//              fontSize: 22,
-            },
+            tabBarStyle: { height: '8%' },
+            headerTitleAlign: 'center',
             tabBarLabelPosition:'below-icon',
+            headerTitle: 'MPEC aplikacja QR wersja 1.0.0',
           })}
         >
 
@@ -172,6 +169,7 @@ export default function App() {
         <Tab.Screen name="Serwisy" component={ServiceScreen} />
         <Tab.Screen name="Przeglądy" component={OverviewScreen} />  
         <Tab.Screen name="Synchronizacja" component={SynchScreen} />  
+        
 
       </Tab.Navigator>
     </NavigationContainer>
