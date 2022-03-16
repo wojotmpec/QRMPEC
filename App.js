@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TextInput, ToastAndroid } from 'react-native';
+import { Text, View, StyleSheet, Button, TouchableOpacity, ToastAndroid } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
@@ -93,7 +93,7 @@ function HomeScreen({ navigation }) {
     } else {
       ToastAndroid.showWithGravityAndOffset(
         "Nieprawidłowy kod QR!",
-        ToastAndroid.LONG,
+        ToastAndroid.SHORT,
         ToastAndroid.CENTER,
         25,
         50
@@ -102,7 +102,7 @@ function HomeScreen({ navigation }) {
 
     setTimeout(() => {
       dataTMP = '';
-    }, 2000);
+    }, 6000);
   };
 
   if (hasPermission === null) {
@@ -118,7 +118,12 @@ function HomeScreen({ navigation }) {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />}
-      {scanned && <Button title={'Skanuj nowy obiekt'} onPress={() => setScanned(false)} />}
+      {/* {scanned && <Button style={styles.button} title={'Skanuj nowy obiekt'} onPress={() => setScanned(false)} />}    */}
+
+      {scanned && <TouchableOpacity onPress={() => setScanned(false)} style={styles.scanAgainButton}>
+          <Text style={styles.scanAgainText}>Skanuj nowy obiekt</Text>
+      </TouchableOpacity>}
+
     </View>
   );
 }
@@ -157,7 +162,7 @@ export default function App() {
             tabBarInactiveTintColor: 'gray',
             tabBarStyle: { height:120, size: 150 },
             tabBarLabelStyle: {
-              fontSize: 22,
+//              fontSize: 22,
             },
             tabBarLabelPosition:'below-icon',
           })}

@@ -62,8 +62,7 @@ function ServiceScreen({route, navigation}) {
       
           <Picker
             selectedValue={selectedValue}
-//            selectedValue={1}
-            style={{ height: 100, width: 250 }}
+            style={{width: 300, height: 100}} 
             onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
           >
             <Picker.Item label="awaria" value="13" />
@@ -96,7 +95,7 @@ function ServiceScreen({route, navigation}) {
           style={styles.input}
         />
   
-        <Button onPress={handleSubmit} title="Zapisz" />
+        <Button onPress={handleSubmit} title="Zapisz" style={styles.buttonSave}/>
        
       </View>
     );

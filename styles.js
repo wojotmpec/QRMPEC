@@ -19,16 +19,16 @@ const styles = StyleSheet.create({
   },
   emptyContainer: {
     flex: 1,
-    flexDirection: "column",
+    flexDirection: 'column',
     margin: 10,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   emptyText: {
     flex: 0,
     alignItems: 'center',
     fontSize: 20,
     justifyContent: 'center',
-    backgroundColor: "tomato",
+    backgroundColor: 'tomato',
     height: 100,
     paddingTop: 30,
     paddingLeft: 20,
@@ -37,11 +37,11 @@ const styles = StyleSheet.create({
   addressText: {
     flex: 0,
     alignItems: 'center',
-    fontSize: 25,
     justifyContent: 'center',
-    backgroundColor: "#DAF7A6",
-    height: 70,
-    paddingTop: 20,
+    backgroundColor: '#DAF7A6',
+    width: '100%',
+    paddingTop: 30,
+    paddingBottom: 30,
     paddingLeft: 20,
     paddingRight: 20,
   },
@@ -49,8 +49,23 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 40
-  }
+    fontSize: 40,
+  },
+  scanAgainButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#DAF7A6',
+    height: '10%',
+    marginTop: 10,
+  },
+  scanAgainText: {
+    fontSize:30
+  },
+  buttonSave: {
+    width: '100%',
+    paddingTop: 30,
+    paddingBottom: 30,
+  },  
 });
 
 export default styles;

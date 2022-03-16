@@ -18,9 +18,13 @@ function SynchScreen({navigation}) {
       var successVal = '0';
       var isData = 0;
       db.transaction(tx => {
-   
+
+        tx.executeSql(
+          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
+        )
+
         tx.executeSql('SELECT * FROM serwis WHERE status = 0', [], (trans, result) => {
-          console.log('pp');
+
           for (let i = 0; i < result.rows.length; ++i) {
             let values = result.rows._array[i];
             dataArray.push({rodzaj: values['rodzaj'], wID: values['w_id'], serwisID: values['serwis_id'], opis: values['opis'], status: values['status'], timeService: values['Timestamp']})
