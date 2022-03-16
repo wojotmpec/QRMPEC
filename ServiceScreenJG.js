@@ -88,6 +88,7 @@ function ServiceScreen({route, navigation}) {
                 <Picker.Item label="zmiana parametrów" value="26" />
               </Picker>       
       
+<<<<<<< HEAD
             <TextInput
               onChangeText={onChangeText}
               value={text}
@@ -169,6 +170,7 @@ function ServiceScreen({route, navigation}) {
         );  
  
    }
+=======
           <Picker
             selectedValue={selectedValue}
             style={styles.picker} 
@@ -211,6 +213,7 @@ function ServiceScreen({route, navigation}) {
       </View>
     );
   }
+>>>>>>> 1cf085b6b6455a98ebf9af93a88967654ab9a595
 }
   
   export default ServiceScreen  ;
