@@ -80,7 +80,7 @@ function HomeScreen({ navigation }) {
       } else {
         
         setScanned(true);
-        
+
         navigation.navigate('Synchronizacja');
         navigation.navigate('Przeglądy', {
           nodeDetails: data
