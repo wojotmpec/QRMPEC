@@ -18,8 +18,6 @@ function ServiceScreen({route, navigation}) {
     const { nodeDetails } = route.params;
     const [text, onChangeText] = useState("");
     const [selectedValue, setSelectedValue] = useState('');
-    
-    console.log('RR' + selectedValue);
 
     const handleSubmit = () => {
       console.log('okx');
@@ -63,7 +61,7 @@ function ServiceScreen({route, navigation}) {
 
               <Picker
                 selectedValue={selectedValue}
-                style={{width: 300, height: 100}} 
+                style={styles.picker} 
                 onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
               >
                 <Picker.Item label="nieokreslony" value="1" />
@@ -91,12 +89,14 @@ function ServiceScreen({route, navigation}) {
             <TextInput
               onChangeText={onChangeText}
               value={text}
-              multiline={true}
+              multiline
               numberOfLines={4}
               style={styles.input}
             />
-      
-            <Button onPress={handleSubmit} title="Zapisz" style={styles.buttonSave}/>
+
+            <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
+              <Text style={styles.saveText}>Zapisz serwis</Text>
+            </TouchableOpacity> 
           
           </View>
         ); 
@@ -108,7 +108,7 @@ function ServiceScreen({route, navigation}) {
 
             <Picker
               selectedValue={selectedValue}
-              style={{width: 300, height: 100}} 
+              style={styles.picker} 
               onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
             >
               <Picker.Item label="nieokreslony" value="8" />
@@ -125,12 +125,14 @@ function ServiceScreen({route, navigation}) {
           <TextInput
             onChangeText={onChangeText}
             value={text}
-            multiline={true}
+            multiline
             numberOfLines={4}
             style={styles.input}
           />
-
-          <Button onPress={handleSubmit} title="Zapisz" style={styles.buttonSave}/>
+          
+          <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
+            <Text style={styles.saveText}>Zapisz serwis</Text>
+          </TouchableOpacity> 
 
           </View>
         );  
@@ -141,7 +143,7 @@ function ServiceScreen({route, navigation}) {
 
             <Picker
               selectedValue={selectedValue}
-              style={{width: 300, height: 100}} 
+              style={styles.picker} 
               onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
             >
               <Picker.Item label="awaria" value="15" />
@@ -158,59 +160,18 @@ function ServiceScreen({route, navigation}) {
           <TextInput
             onChangeText={onChangeText}
             value={text}
-            multiline={true}
+            multiline
             numberOfLines={4}
             style={styles.input}
           />
 
-          <Button onPress={handleSubmit} title="Zapisz" style={styles.buttonSave}/>
+          <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
+            <Text style={styles.saveText}>Zapisz serwis</Text>
+          </TouchableOpacity> 
 
           </View>
         );  
- 
+      }
    }
-          <Picker
-            selectedValue={selectedValue}
-            style={styles.picker} 
-            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-          >
-            <Picker.Item label="awaria" value="13" />
-            <Picker.Item label="elektryk" value="20" />
-            <Picker.Item label="konserwacja" value="14" />
-            <Picker.Item label="kontrola_parametrów" value="4" />
-            <Picker.Item label="legalizacja" value="5" />
-            <Picker.Item label="licznik" value="7" />
-            <Picker.Item label="nieokreslony" value="1" />
-            <Picker.Item label="plan" value="24" />
-            <Picker.Item label="płukanie wymienników" value="17" />
-            <Picker.Item label="pogotowie" value="19" />
-            <Picker.Item label="pogotowie - korekta" value="31" />
-            <Picker.Item label="przegląd węzła" value="3" />
-            <Picker.Item label="przekroczenia" value="23" />
-            <Picker.Item label="reklamacja" value="2" />
-            <Picker.Item label="udt" value="6" />
-            <Picker.Item label="uwagi" value="21" />
-            <Picker.Item label="wymiana urządzenia" value="28" />
-            <Picker.Item label="zgłoszenie" value="18" />
-            <Picker.Item label="zmiana krzywej" value="27" />
-            <Picker.Item label="zmiana parametrów" value="26" />
-          </Picker>       
-  
-        <TextInput
-          onChangeText={onChangeText}
-          value={text}
-          multiline
-          numberOfLines={4}
-          style={styles.input}
-        />
-  
-        <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
-          <Text style={styles.saveText}>Zapisz serwis</Text>
-        </TouchableOpacity> 
-       
-      </View>
-    );
-  }
-}
-  
-  export default ServiceScreen  ;
+
+  export default ServiceScreen;
