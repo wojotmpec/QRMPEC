@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -15,14 +15,25 @@ const Stack = createNativeStackNavigator();
 
 function ServiceScreen({route, navigation}) {
   
-    const { nodeDetails } = route.params;
+    const { nodeDetails, serviceID } = route.params;
     const [text, onChangeText] = useState("");
-    const [selectedValue, setSelectedValue] = useState('');
+    const [selectedValue, setSelectedValue] = useState(serviceID);
+    const [startValue, setStartValue] = useState("");
+  
+    useEffect(() => {
+      if(startValue != serviceID) {
+        setSelectedValue(serviceID);           
+        setStartValue(serviceID);
+      }
+    });
+         
+    console.log('SFXY:' + serviceID + ' B ' + selectedValue + ':E');
+
 
     const handleSubmit = () => {
       console.log('okx');
       console.log(selectedValue);
-  
+
       db.transaction(tx => {
   
        // tx.executeSql(
@@ -54,6 +65,8 @@ function ServiceScreen({route, navigation}) {
           </TouchableOpacity> 
         </View>);
     } else if(nodeDetails.split(';;;')[0] == '1' || nodeDetails.split(';;;')[0] == '4') {
+
+//      setSelectedValue({serviceID});
 
        return (
           <View style={styles.mainContainer}>      
