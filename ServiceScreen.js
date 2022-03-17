@@ -53,7 +53,7 @@ function ServiceScreen({route, navigation}) {
             <Text style={styles.emptyText}>Musisz zeskanować najpierw obiekt</Text>
           </TouchableOpacity> 
         </View>);
-    } else if(nodeDetails.split(';;;')[0] == '1') {
+    } else if(nodeDetails.split(';;;')[0] == '1' || nodeDetails.split(';;;')[0] == '4') {
 
        return (
           <View style={styles.mainContainer}>      
@@ -136,6 +136,36 @@ function ServiceScreen({route, navigation}) {
 
           </View>
         );  
+        
+      } else if(nodeDetails.split(';;;')[0] == '3') {
+      
+        return (
+          <View style={styles.mainContainer}>      
+          <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
+
+            <Picker
+              selectedValue={selectedValue}
+              style={styles.picker} 
+              onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+            >
+              <Picker.Item label="próba ciśnieniowa" value="29" />
+              <Picker.Item label="remont" value="30" />
+            </Picker>       
+
+          <TextInput
+            onChangeText={onChangeText}
+            value={text}
+            multiline
+            numberOfLines={4}
+            style={styles.input}
+          />
+          
+          <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
+            <Text style={styles.saveText}>Zapisz serwis</Text>
+          </TouchableOpacity> 
+
+          </View>
+        );  
       }  else  {
         return (
           <View style={styles.mainContainer}>      
@@ -146,15 +176,7 @@ function ServiceScreen({route, navigation}) {
               style={styles.picker} 
               onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
             >
-              <Picker.Item label="awaria" value="15" />
-              <Picker.Item label="konserwacja" value="16" />
-              <Picker.Item label="kontrola_parametrów" value="10" />
               <Picker.Item label="nieokreslony" value="8" />
-              <Picker.Item label="odczyt parametrów" value="11" />
-              <Picker.Item label="plan" value="25" />
-              <Picker.Item label="przegląd komory" value="9" />
-              <Picker.Item label="remont" value="12" />
-              <Picker.Item label="uwagi" value="22" />
             </Picker>       
 
           <TextInput
