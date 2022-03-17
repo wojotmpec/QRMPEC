@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TouchableOpacity, ToastAndroid } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Text, View, StyleSheet, Button, TouchableOpacity, ToastAndroid, Image } from 'react-native';
 
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import * as SQLite from 'expo-sqlite'
 
+import { Ionicons } from '@expo/vector-icons';
+import logo from './assets/logo.png'; 
 import styles from './styles';  
 
 import ServiceScreen from './ServiceScreen';
 import OverviewScreen from './OverviewScreen';
 import SynchScreen from './SynchScreen';
 
-import * as SQLite from 'expo-sqlite'
-import { createContext } from 'react/cjs/react.production.min';
 const db = SQLite.openDatabase('db.QRProject')
-
 const Tab = createBottomTabNavigator();
+
+function LogoTitle() {
+  return (
+    <><Text style={{height:100}}><Image source={logo} style={{ width: 50, height: 50,}} /> {'          '} MPEC aplikacja QR wersja 1.0.0</Text></>
+  );
+}
 
 function HomeScreen({ navigation }) {
 
@@ -24,6 +29,7 @@ function HomeScreen({ navigation }) {
   const [scanned, setScanned] = useState(false);
   const isFocused = useIsFocused(); 
   var dataTMP = '';    
+  
 
   useEffect(() => {
     (async () => {
@@ -138,8 +144,23 @@ function HomeScreen({ navigation }) {
 }
 
 export default function App() {
+  const [toSync, setToSync] = useState(0);
+
+  useEffect(() => {    
+    db.transaction(transaction => {
+      transaction.executeSql(`SELECT COUNT(*) AS do_wyslania FROM serwis WHERE status = 0;`,
+      [], (transaction, resultSet) =>{
+        setToSync(resultSet.rows._array[0]['do_wyslania']);
+        console.log('toSync')
+        console.log(toSync)
+      },
+      (transaction, error) => console.log(error));
+    });
+  });
+
   return (
     <NavigationContainer>
+      
         <Tab.Navigator  
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
@@ -171,16 +192,15 @@ export default function App() {
             tabBarStyle: { height: '8%' },
             headerTitleAlign: 'center',
             tabBarLabelPosition:'below-icon',
-            headerTitle: 'MPEC aplikacja QR wersja 1.0.0',
-          })}
+            tabBarBadgeStyle: {backgroundColor: 'tomato', color:'white'},
+            headerTitle: (props) => <LogoTitle {...props} />,
+          })} 
         >
 
         <Tab.Screen name="Skaner kodu QR" component={HomeScreen} />        
         <Tab.Screen name="Serwisy" component={ServiceScreen} />
         <Tab.Screen name="Przeglądy" component={OverviewScreen} />  
-        <Tab.Screen name="Synchronizacja" component={SynchScreen} />  
-        
-
+        <Tab.Screen name="Synchronizacja" component={SynchScreen} options={{ tabBarBadge: toSync }}/>          
       </Tab.Navigator>
     </NavigationContainer>
   );

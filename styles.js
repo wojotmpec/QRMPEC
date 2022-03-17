@@ -73,16 +73,16 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     paddingLeft: 100,
     paddingRight: 100,
-    width: "70%",
+    width: "100%",
   },
   picker: {
-    width: '70%',
+    width: '50%',
     height: 150
   },
   input: {
-    width: '70%',
+    width: '80%',
     padding: 10,
-    backgroundColor: '#E5E4E2',
+    backgroundColor: '#bababa',
     borderBottomColor: '#ababab',
     borderBottomWidth: 1,
     borderTopColor: '#d4d4d4',

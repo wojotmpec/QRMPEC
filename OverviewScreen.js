@@ -1,6 +1,7 @@
 import React, { useState, } from 'react';
 import { Text, View, TextInput, ToastAndroid, TouchableOpacity} from 'react-native';
 
+import {Picker} from '@react-native-picker/picker';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Checkbox from 'expo-checkbox';
@@ -15,7 +16,9 @@ function OverviewScreen({route, navigation}) {
   
   const { nodeDetails } = route.params;
   const [isChecked, setChecked] = useState(false);
+  const [isChecked2, setChecked2] = useState(false);
   const [text, onChangeText] = useState("");
+  const [selectedValue, setSelectedValue] = useState('');
   
   const handleSubmit = () => {
 
@@ -62,8 +65,24 @@ function OverviewScreen({route, navigation}) {
         <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
 
         <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-        <Text>{isChecked ? 'true':'false'}przegląd turbiny{'\n\n'}</Text>   
+        <Text>Przegląd turbiny{'\n\n'}</Text>   
 
+        
+        <Text><Checkbox style={styles.checkbox} value={isChecked2} onValueChange={setChecked2} /> Przegląd węzła</Text>   
+
+        <Picker
+                selectedValue={selectedValue}
+                style={styles.picker} 
+                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+              >
+                <Picker.Item label="nieokreslony" value="1" />
+                <Picker.Item label="awaria" value="13" />
+                <Picker.Item label="elektryk" value="20" />
+                <Picker.Item label="konserwacja" value="14" />
+                <Picker.Item label="kontrola_parametrów" value="4" />
+                <Picker.Item label="legalizacja" value="5" />
+                <Picker.Item label="licznik" value="7" />
+              </Picker>   
         <TextInput
           onChangeText={onChangeText} 
           value={text}
@@ -78,4 +97,4 @@ function OverviewScreen({route, navigation}) {
     }
   }
 
-export default OverviewScreen  ;
+export default OverviewScreen;
