@@ -151,8 +151,6 @@ export default function App() {
       transaction.executeSql(`SELECT COUNT(*) AS do_wyslania FROM serwis WHERE status = 0;`,
       [], (transaction, resultSet) =>{
         setToSync(resultSet.rows._array[0]['do_wyslania']);
-        console.log('toSync')
-        console.log(toSync)
       },
       (transaction, error) => console.log(error));
     });

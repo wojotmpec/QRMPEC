@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { Text, View, ToastAndroid, TouchableOpacity} from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,8 +10,18 @@ const db = SQLite.openDatabase('db.QRProject')
 const Stack = createNativeStackNavigator();
 
 function SynchScreen({navigation}) {
-  
-    
+
+    var focusListener = navigation.addListener('focus', () => {
+      db.transaction(transaction => {
+        transaction.executeSql(`SELECT COUNT(*) AS do_wyslania FROM serwis WHERE status = 0;`,
+        [], (transaction, resultSet) =>{
+          navigation.setOptions({
+            tabBarBadge: resultSet.rows._array[0]['do_wyslania'] });
+        },
+        (transaction, error) => console.log(error));
+      });
+    });
+
     const handleSubmit = () => {
       console.log('oky');
 

@@ -55,6 +55,9 @@ function ServiceScreen({route, navigation}) {
           50
         );
       }) 
+
+      navigation.navigate('Synchronizacja');
+
     }
       
     if(nodeDetails == '') {
