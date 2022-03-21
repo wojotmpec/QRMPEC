@@ -17,8 +17,8 @@ function OverviewScreen({route, navigation}) {
   const { nodeDetails } = route.params;
   const [isChecked, setChecked] = useState(false);
   const [isChecked2, setChecked2] = useState(false);
+  const [isChecked3, setChecked3] = useState(false);
   const [text, onChangeText] = useState("");
-  const [selectedValue, setSelectedValue] = useState('');
   
   const handleSubmit = () => {
 
@@ -61,38 +61,31 @@ function OverviewScreen({route, navigation}) {
     } else {
 
     return (
-      <View style={styles.mainContainer}>      
-        <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
+      <View>
+        <View style={styles.mainContainer}>      
+          <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
+        </View>
+          
+        <View style={styles.checkboxContainer}>
+          <Text style={styles.checkboxText} onPress={()=>setChecked(!isChecked)}><Checkbox value={isChecked} onValueChange={setChecked} /> Przegląd węzła</Text>
+          <Text style={styles.checkboxText} onPress={()=>setChecked2(!isChecked2)}><Checkbox value={isChecked2} onValueChange={setChecked2} /> Serwis węzła</Text>
+          <Text style={styles.checkboxText} onPress={()=>setChecked3(!isChecked3)}><Checkbox value={isChecked3} onValueChange={setChecked3} /> Bardzo długi tekst nt. serwisu węzła</Text>
+        </View>
 
-        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-        <Text>Przegląd turbiny{'\n\n'}</Text>   
+        <View style={styles.mainContainer}>      
+          <TextInput
+            onChangeText={onChangeText}
+            value={text}
+            multiline
+            numberOfLines={4}
+            style={styles.input}
+          />
 
-        
-        <Text><Checkbox style={styles.checkbox} value={isChecked2} onValueChange={setChecked2} /> Przegląd węzła</Text>   
+          <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
+            <Text style={styles.saveText}>Zapisz przegląd</Text>
+          </TouchableOpacity> 
 
-        <Picker
-                selectedValue={selectedValue}
-                style={styles.picker} 
-                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-              >
-                <Picker.Item label="nieokreslony" value="1" />
-                <Picker.Item label="awaria" value="13" />
-                <Picker.Item label="elektryk" value="20" />
-                <Picker.Item label="konserwacja" value="14" />
-                <Picker.Item label="kontrola_parametrów" value="4" />
-                <Picker.Item label="legalizacja" value="5" />
-                <Picker.Item label="licznik" value="7" />
-              </Picker>   
-        <TextInput
-          onChangeText={onChangeText} 
-          value={text}
-          style={styles.input}
-        />
-
-        <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
-          <Text style={styles.saveText}>Zapisz przegląd</Text>
-        </TouchableOpacity> 
-
+        </View>
       </View>);
     }
   }

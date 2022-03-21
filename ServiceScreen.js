@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as Device from 'expo-device';
 
 import {Picker} from '@react-native-picker/picker';
 import styles from './styles'; 
@@ -28,7 +29,6 @@ function ServiceScreen({route, navigation}) {
     });
          
     console.log('SFXY:' + serviceID + ' B ' + selectedValue + ':E');
-
 
     const handleSubmit = () => {
       console.log('okx');
@@ -74,6 +74,7 @@ function ServiceScreen({route, navigation}) {
        return (
           <View style={styles.mainContainer}>      
             <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
+            <Text>{Device.deviceName}</Text>
 
               <Picker
                 selectedValue={selectedValue}

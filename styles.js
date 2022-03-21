@@ -51,6 +51,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  checkboxContainer: {
+    flex: 0,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    width: '70%',
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingLeft: 120,
+    width: "100%",
+  },
+  checkboxText:{
+    marginBottom: 20,
+  },
   scanAgainButton: {
     alignItems: 'center',
     justifyContent: 'center',
