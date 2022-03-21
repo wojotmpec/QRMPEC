@@ -33,18 +33,19 @@ function ServiceScreen({route, navigation}) {
     const handleSubmit = () => {
       console.log('okx');
       console.log(selectedValue);
+      var mistrz = 'J.Kowalski';
 
       db.transaction(tx => {
   
-       // tx.executeSql(
-       //   'DROP TABLE serwis'
-       // )
         tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
+          'DROP TABLE serwis'
+        )
+        tx.executeSql(
+          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, mistrz TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
         )
   
         tx.executeSql(
-          'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + selectedValue + ',' + JSON.stringify(text) + ',0' + ')'
+          'INSERT INTO serwis (typ, mistrz, rodzaj, w_id, serwis_id, opis, status) values (1, '+ JSON.stringify(mistrz) +',' + Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + selectedValue + ',' + JSON.stringify(text) + ',0' + ')'
         ) 
 
         ToastAndroid.showWithGravityAndOffset(
