@@ -33,7 +33,7 @@ function ServiceScreen({route, navigation}) {
     const handleSubmit = () => {
       console.log('okx');
       console.log(selectedValue);
-      var mistrz = 'J.Kowalski';
+      var mistrz = Device.deviceName;
 
       db.transaction(tx => {
   

@@ -1,8 +1,8 @@
 import React, { useState, } from 'react';
 import { Text, View, TextInput, ToastAndroid, TouchableOpacity} from 'react-native';
 
-import {Picker} from '@react-native-picker/picker';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as Device from 'expo-device';
 
 import Checkbox from 'expo-checkbox';
 import styles from './styles'; 
@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator();
 function OverviewScreen({route, navigation}) {
   
   const { nodeDetails } = route.params;
-  const [isChecked, setChecked] = useState(false);
+  const [isChecked1, setChecked1] = useState(false);
   const [isChecked2, setChecked2] = useState(false);
   const [isChecked3, setChecked3] = useState(false);
   const [text, onChangeText] = useState("");
@@ -23,10 +23,12 @@ function OverviewScreen({route, navigation}) {
   const handleSubmit = () => {
 
 
-    let val1 = 0;
-    if(isChecked == 1) {
-      val1 = 1;
-    }
+    let val = '';
+    if(isChecked1 == 1) { val = '1'; } else {val = '0';}
+    if(isChecked2 == 1) { val = val+',1'; } else {val = val+',0';}
+    if(isChecked3 == 1) { val = val+',1'; } else {val = val+',0';}
+    
+    var mistrz = Device.deviceName;
     
     db.transaction(tx => {
 
@@ -34,11 +36,11 @@ function OverviewScreen({route, navigation}) {
       //   'DROP TABLE serwis'
       // )
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
+        'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, mistrz TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
       )
 
       tx.executeSql(
-        'INSERT INTO serwis (rodzaj, w_id, serwis_id, opis, status) values ('+ Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + val1 + ',' + JSON.stringify(text) + ',0' + ')'
+        'INSERT INTO serwis (typ, typ_opcje, mistrz, rodzaj, w_id, serwis_id, opis, status) values (2,' + JSON.stringify(val) + ',' + JSON.stringify(mistrz) +','+ Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',0,' + JSON.stringify(text) + ',0' + ')'
       )
 
       ToastAndroid.showWithGravityAndOffset(
@@ -49,6 +51,8 @@ function OverviewScreen({route, navigation}) {
         50
       );
     })  
+
+    navigation.navigate('Synchronizacja');
   }
       
   if(nodeDetails == '') {
@@ -67,7 +71,7 @@ function OverviewScreen({route, navigation}) {
         </View>
           
         <View style={styles.checkboxContainer}>
-          <Text style={styles.checkboxText} onPress={()=>setChecked(!isChecked)}><Checkbox value={isChecked} onValueChange={setChecked} /> Przegląd węzła</Text>
+          <Text style={styles.checkboxText} onPress={()=>setChecked1(!isChecked1)}><Checkbox value={isChecked1} onValueChange={setChecked1} /> Przegląd węzła</Text>
           <Text style={styles.checkboxText} onPress={()=>setChecked2(!isChecked2)}><Checkbox value={isChecked2} onValueChange={setChecked2} /> Serwis węzła</Text>
           <Text style={styles.checkboxText} onPress={()=>setChecked3(!isChecked3)}><Checkbox value={isChecked3} onValueChange={setChecked3} /> Bardzo długi tekst nt. serwisu węzła</Text>
         </View>

@@ -69,6 +69,14 @@ function SynchScreen({navigation}) {
                   tx1.executeSql(
                     'UPDATE serwis SET status=1 WHERE status = 0;'
                   )
+                  db.transaction(transaction => {
+                    transaction.executeSql(`SELECT COUNT(*) AS do_wyslania FROM serwis WHERE status = 0;`,
+                    [], (transaction, resultSet) =>{
+                      navigation.setOptions({
+                        tabBarBadge: resultSet.rows._array[0]['do_wyslania'] });
+                    },
+                    (transaction, error) => console.log(error));
+                  });
                   console.log( 'DONE')
                   ToastAndroid.showWithGravityAndOffset(
                     "Synchronizacja przebiegła pomyślnie!",
