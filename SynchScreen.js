@@ -11,6 +11,15 @@ const Stack = createNativeStackNavigator();
 
 function SynchScreen({navigation}) {
 
+    db.transaction(transaction => {
+      transaction.executeSql(`SELECT COUNT(*) AS do_wyslania FROM serwis WHERE status = 0;`,
+      [], (transaction, resultSet) =>{
+        navigation.setOptions({
+          tabBarBadge: resultSet.rows._array[0]['do_wyslania'] });
+      },
+      (transaction, error) => console.log(error));
+    });
+
     var focusListener = navigation.addListener('focus', () => {
       db.transaction(transaction => {
         transaction.executeSql(`SELECT COUNT(*) AS do_wyslania FROM serwis WHERE status = 0;`,
