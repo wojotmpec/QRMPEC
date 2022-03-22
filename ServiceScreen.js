@@ -123,6 +123,7 @@ function ServiceScreen({route, navigation}) {
         return (
           <View style={styles.mainContainer}>      
           <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
+          <Text>{Device.deviceName}</Text>
 
             <Picker
               selectedValue={selectedValue}
@@ -160,6 +161,7 @@ function ServiceScreen({route, navigation}) {
         return (
           <View style={styles.mainContainer}>      
           <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
+          <Text>{Device.deviceName}</Text>
 
             <Picker
               selectedValue={selectedValue}
@@ -188,6 +190,7 @@ function ServiceScreen({route, navigation}) {
         return (
           <View style={styles.mainContainer}>      
           <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
+          <Text>{Device.deviceName}</Text>
 
             <Picker
               selectedValue={selectedValue}
