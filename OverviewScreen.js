@@ -29,18 +29,18 @@ function OverviewScreen({route, navigation}) {
     if(isChecked3 == 1) { val = val+',1'; } else {val = val+',0';}
     
     var mistrz = Device.deviceName;
-    
+   
     db.transaction(tx => {
 
-      // tx.executeSql(
-      //   'DROP TABLE serwis'
-      // )
+//       tx.executeSql(
+//         'DROP TABLE serwis'
+//       )
       tx.executeSql(
         'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, mistrz TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
       )
-
+      
       tx.executeSql(
-        'INSERT INTO serwis (typ, typ_opcje, mistrz, rodzaj, w_id, serwis_id, opis, status) values (2,' + JSON.stringify(val) + ',' + JSON.stringify(mistrz) +','+ Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',0,' + JSON.stringify(text) + ',0' + ')'
+        'INSERT INTO serwis (typ, typ_opcje, mistrz, rodzaj, w_id, serwis_id, opis, status, Timestamp) values (2,' + JSON.stringify(val) + ',' + JSON.stringify(mistrz) +','+ Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',0,' + JSON.stringify(text) + ',0, datetime("now", "localtime"))'
       )
 
       ToastAndroid.showWithGravityAndOffset(

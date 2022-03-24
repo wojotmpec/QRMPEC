@@ -32,7 +32,6 @@ function SynchScreen({navigation}) {
     });
 
     const handleSubmit = () => {
-      console.log('oky');
 
       var dataArray = Array();
       var successVal = '0';
@@ -70,10 +69,9 @@ function SynchScreen({navigation}) {
   //            console.log(data);
               // enter you logic when the fetch is successful               
                successVal = data.status
-               console.log( 'PPR'+ successVal)
+
                db.transaction(tx1 => {
    
-                console.log( 'HERE' + successVal)
                 if(successVal == '1') {
                   tx1.executeSql(
                     'UPDATE serwis SET status=1 WHERE status = 0;'
@@ -86,7 +84,6 @@ function SynchScreen({navigation}) {
                     },
                     (transaction, error) => console.log(error));
                   });
-                  console.log( 'DONE')
                   ToastAndroid.showWithGravityAndOffset(
                     "Synchronizacja przebiegła pomyślnie!",
                     ToastAndroid.LONG,
@@ -94,6 +91,7 @@ function SynchScreen({navigation}) {
                     25,
                     50
                   );
+                  console.log( 'DATA SENT')
                 } else {
                   console.log( 'FAILED')
                   ToastAndroid.showWithGravityAndOffset(
@@ -105,7 +103,6 @@ function SynchScreen({navigation}) {
                   );
                 }        
               }) 
-               console.log( 'EEE'+ successVal)
              }).catch(error => {
               // enter your logic for when there is an error (ex. error toast)
                console.log(error)
