@@ -49,7 +49,7 @@ function SynchScreen({navigation}) {
             if(values['typ_opcje'] == null) {
               values['typ_opcje'] = '';
             }
-            dataArray.push({ type: values['typ'], typeOptions: values['typ_opcje'], serviceMan: values['mistrz'], rodzaj: values['rodzaj'], wID: values['w_id'], serwisID: values['serwis_id'], opis: values['opis'], status: values['status'], timeService: values['Timestamp']})
+            dataArray.push({ type: values['typ'], typeOptions: values['typ_opcje'], serviceMan: values['serwisant'], rodzaj: values['rodzaj'], wID: values['w_id'], serwisID: values['serwis_id'], opis: values['opis'], status: values['status'], timeService: values['Timestamp']})
             isData = 1;
           }
           console.log(dataArray);

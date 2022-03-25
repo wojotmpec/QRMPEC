@@ -190,7 +190,7 @@ export default function App() {
             tabBarStyle: { height: '8%' },
             headerTitleAlign: 'center',
             tabBarLabelPosition:'below-icon',
-            tabBarBadgeStyle: {backgroundColor: 'tomato', color:'white',  width: 30, height: 30, fontSize:15, alignItems:'center', justifyContent: 'center'},
+            tabBarBadgeStyle: { backgroundColor: '#fdfdfd', color:'tomato',  width: 30, height: 30, fontSize:15, alignItems:'center', justifyContent: 'center'},
             headerTitle: (props) => <LogoTitle {...props} />,
           })} 
         >

@@ -20,7 +20,8 @@ function ServiceScreen({route, navigation}) {
     const [text, onChangeText] = useState("");
     const [selectedValue, setSelectedValue] = useState(serviceID);
     const [startValue, setStartValue] = useState("");
-  
+    const [serviceTechnician, setServicetechnician] = useState("");
+    
     useEffect(() => {
       if(startValue != serviceID) {
         setSelectedValue(serviceID);           
@@ -30,20 +31,29 @@ function ServiceScreen({route, navigation}) {
          
     const handleSubmit = () => {
 
-      var mistrz = Device.deviceName;
+      if(serviceTechnician == ''){
+        ToastAndroid.showWithGravityAndOffset(
+          "Musisz wybrać użytkownika!",
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+          25,
+          50
+        );
+        return;
+      }
 
       db.transaction(tx => {
   
-//         tx.executeSql(
-//           'DROP TABLE serwis'
-//         )
+        // tx.executeSql(
+        //   'DROP TABLE serwis'
+        // )
 
         tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, mistrz TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
+          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, serwisant TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
         )
   
         tx.executeSql(
-          'INSERT INTO serwis (typ, mistrz, rodzaj, w_id, serwis_id, opis, status, Timestamp) values (1, '+ JSON.stringify(mistrz) +',' + Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + selectedValue + ',' + JSON.stringify(text) + ',0, datetime("now", "localtime"))'
+          'INSERT INTO serwis (typ, serwisant, rodzaj, w_id, serwis_id, opis, status, Timestamp) values (1, '+ JSON.stringify(serviceTechnician) +',' + Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + selectedValue + ',' + JSON.stringify(text) + ',0, datetime("now", "localtime"))'
         ) 
 
         ToastAndroid.showWithGravityAndOffset(
@@ -58,6 +68,8 @@ function ServiceScreen({route, navigation}) {
       navigation.navigate('Synchronizacja');
 
     }
+
+    var serviceTechniciansArr = Device.deviceName.split(";");
       
     if(nodeDetails == '') {
       return (
@@ -66,40 +78,73 @@ function ServiceScreen({route, navigation}) {
             <Text style={styles.emptyText}>Musisz zeskanować najpierw obiekt</Text>
           </TouchableOpacity> 
         </View>);
-    } else if(nodeDetails.split(';;;')[0] == '1' || nodeDetails.split(';;;')[0] == '4') {
+    } else if(nodeDetails.split(';;;')[0]){
 
-//      setSelectedValue({serviceID});
+      if (nodeDetails.split(';;;')[0] == '1' || nodeDetails.split(';;;')[0] == '4') {
+        var pickerItemsArr = {
+          "nieokreslony": 1,
+          "awaria": 13,
+          "elektryk": 20,
+          "konserwacja": 14,
+          "kontrola_parametrów": 4,
+          "legalizacja": 5,
+          "licznik": 7,
+          "plan": 24,
+          "płukanie wymienników": 17,
+          "pogotowie": 19,
+          "pogotowie - korekta": 31,
+          "przegląd węzła": 3,
+          "przekroczenia": 23,
+          "reklamacja": 2,
+          "udt": 6,
+          "uwagi": 21,
+          "wymiana urządzenia": 28,
+          "zgłoszenie": 18,
+          "zmiana krzywej": 27,
+          "zmiana parametrów": 26,
+        }
+      } else if (nodeDetails.split(';;;')[0] == '2') {
+        var pickerItemsArr = {
+          "nieokreslony": 8,
+          "awaria": 15,
+          "konserwacja": 16,
+          "kontrola_parametrów": 10,
+          "odczyt parametrów": 11,
+          "plan": 25,
+          "przegląd komory": 9,
+          "remont": 12,
+          "uwagi": 22,
+        }
+      } else if (nodeDetails.split(';;;')[0] == '3') {
+        var pickerItemsArr = {
+          "próba ciśnieniowa": 29,
+          "remont": 30,
+        }
+      } else {
+        var pickerItemsArr = {
+          "nieokreslony": 8,
+        }
+      }
 
        return (
           <View style={styles.mainContainer}>      
             <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
-            <Text>{Device.deviceName}</Text>
+            
+              <Picker
+                selectedValue={serviceTechnician}
+                style={styles.picker} 
+                onValueChange={(itemValue, itemIndex) => setServicetechnician(itemValue)}
+              >
+                <Picker.Item label="Wybierz użytkownika" value="" />
+                {serviceTechniciansArr.map(technician => {return <Picker.Item key={technician} label={technician} value={technician} />})}
+              </Picker>   
 
               <Picker
                 selectedValue={selectedValue}
                 style={styles.picker} 
                 onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
               >
-                <Picker.Item label="nieokreslony" value="1" />
-                <Picker.Item label="awaria" value="13" />
-                <Picker.Item label="elektryk" value="20" />
-                <Picker.Item label="konserwacja" value="14" />
-                <Picker.Item label="kontrola_parametrów" value="4" />
-                <Picker.Item label="legalizacja" value="5" />
-                <Picker.Item label="licznik" value="7" />                
-                <Picker.Item label="plan" value="24" />
-                <Picker.Item label="płukanie wymienników" value="17" />
-                <Picker.Item label="pogotowie" value="19" />
-                <Picker.Item label="pogotowie - korekta" value="31" />
-                <Picker.Item label="przegląd węzła" value="3" />
-                <Picker.Item label="przekroczenia" value="23" />
-                <Picker.Item label="reklamacja" value="2" />
-                <Picker.Item label="udt" value="6" />
-                <Picker.Item label="uwagi" value="21" />
-                <Picker.Item label="wymiana urządzenia" value="28" />
-                <Picker.Item label="zgłoszenie" value="18" />
-                <Picker.Item label="zmiana krzywej" value="27" />
-                <Picker.Item label="zmiana parametrów" value="26" />
+                {Object.keys(pickerItemsArr).map(key => {return <Picker.Item key={pickerItemsArr[key]} label={key} value={pickerItemsArr[key]} />})}
               </Picker>       
       
             <TextInput
@@ -116,103 +161,7 @@ function ServiceScreen({route, navigation}) {
           
           </View>
         ); 
-      } else if(nodeDetails.split(';;;')[0] == '2') {
-      
-        return (
-          <View style={styles.mainContainer}>      
-          <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
-          <Text>{Device.deviceName}</Text>
-
-            <Picker
-              selectedValue={selectedValue}
-              style={styles.picker} 
-              onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-            >
-              <Picker.Item label="nieokreslony" value="8" />
-              <Picker.Item label="awaria" value="15" />
-              <Picker.Item label="konserwacja" value="16" />
-              <Picker.Item label="kontrola_parametrów" value="10" />              
-              <Picker.Item label="odczyt parametrów" value="11" />
-              <Picker.Item label="plan" value="25" />
-              <Picker.Item label="przegląd komory" value="9" />
-              <Picker.Item label="remont" value="12" />
-              <Picker.Item label="uwagi" value="22" />
-            </Picker>       
-
-          <TextInput
-            onChangeText={onChangeText}
-            value={text}
-            multiline
-            numberOfLines={4}
-            style={styles.input}
-          />
-          
-          <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
-            <Text style={styles.saveText}>Zapisz serwis</Text>
-          </TouchableOpacity> 
-
-          </View>
-        );  
-        
-      } else if(nodeDetails.split(';;;')[0] == '3') {
-      
-        return (
-          <View style={styles.mainContainer}>      
-          <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
-          <Text>{Device.deviceName}</Text>
-
-            <Picker
-              selectedValue={selectedValue}
-              style={styles.picker} 
-              onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-            >
-              <Picker.Item label="próba ciśnieniowa" value="29" />
-              <Picker.Item label="remont" value="30" />
-            </Picker>       
-
-          <TextInput
-            onChangeText={onChangeText}
-            value={text}
-            multiline
-            numberOfLines={4}
-            style={styles.input}
-          />
-          
-          <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
-            <Text style={styles.saveText}>Zapisz serwis</Text>
-          </TouchableOpacity> 
-
-          </View>
-        );  
-      }  else  {
-        return (
-          <View style={styles.mainContainer}>      
-          <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
-          <Text>{Device.deviceName}</Text>
-
-            <Picker
-              selectedValue={selectedValue}
-              style={styles.picker} 
-              onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-            >
-              <Picker.Item label="nieokreslony" value="8" />
-            </Picker>       
-
-          <TextInput
-            onChangeText={onChangeText}
-            value={text}
-            multiline
-            numberOfLines={4}
-            style={styles.input}
-          />
-
-          <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
-            <Text style={styles.saveText}>Zapisz serwis</Text>
-          </TouchableOpacity> 
-
-          </View>
-        );  
-      }
+      } 
    }
 
   export default ServiceScreen;
