@@ -11,7 +11,7 @@ import logo from './assets/logo.png';
 import styles from './styles';  
 
 import ServiceScreen from './ServiceScreen';
-import OverviewScreen from './OverviewScreen';
+// import OverviewScreen from './OverviewScreen';
 import SynchScreen from './SynchScreen';
 
 const db = SQLite.openDatabase('db.QRProject')
@@ -35,9 +35,9 @@ function HomeScreen({ navigation }) {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
-      navigation.navigate('Przeglądy', {
-        nodeDetails: ''
-      });
+      // navigation.navigate('Przeglądy', {
+      //   nodeDetails: ''
+      // });
       navigation.navigate('Serwisy', {
         nodeDetails: ''
       });
@@ -96,9 +96,9 @@ function HomeScreen({ navigation }) {
         }          
 
         navigation.navigate('Synchronizacja');
-        navigation.navigate('Przeglądy', {
-          nodeDetails: data
-        });
+        // navigation.navigate('Przeglądy', {
+        //   nodeDetails: data
+        // });
         navigation.navigate('Serwisy', {
           nodeDetails: data,
           serviceID: serviceStartID
@@ -172,10 +172,10 @@ export default function App() {
                 iconName = focused
                 ? 'key'
                 : 'key-outline';
-              } else if (route.name === 'Przeglądy') {              
-                iconName = focused
-                ? 'construct'
-                : 'construct-outline';
+              // } else if (route.name === 'Przeglądy') {              
+              //   iconName = focused
+              //   ? 'construct'
+              //   : 'construct-outline';
               } else if (route.name === 'Synchronizacja') {              
                 iconName = focused
                 ? 'repeat'
@@ -197,7 +197,7 @@ export default function App() {
 
         <Tab.Screen name="Skaner kodu QR" component={HomeScreen} />        
         <Tab.Screen name="Serwisy" component={ServiceScreen} />
-        <Tab.Screen name="Przeglądy" component={OverviewScreen} />  
+        {/* <Tab.Screen name="Przeglądy" component={OverviewScreen} />   */}
         <Tab.Screen name="Synchronizacja" component={SynchScreen} options={{ tabBarBadge: toSync }}/>          
       </Tab.Navigator>
     </NavigationContainer>
