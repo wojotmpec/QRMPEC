@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, ToastAndroid, TouchableOpacity, Button, Alert } from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Device from 'expo-device';
@@ -30,28 +30,6 @@ function ServiceScreen({route, navigation}) {
     });
          
     const handleSubmit = () => {
-
-      if(serviceTechnician == ''){
-        ToastAndroid.showWithGravityAndOffset(
-          "Musisz wybrać użytkownika!",
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-          25,
-          50
-        );
-        return;
-      }
-
-      if(selectedValue == '-1'){
-        ToastAndroid.showWithGravityAndOffset(
-          "Musisz wybrać rodzaj serwisu!",
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-          25,
-          50
-        );
-        return;
-      }
 
       db.transaction(tx => {
   
@@ -85,7 +63,56 @@ function ServiceScreen({route, navigation}) {
       }) 
 
       navigation.navigate('Synchronizacja');
+    }
 
+
+    const todoFunction = () => {
+      Alert.alert(
+        "Otwarcie/zamknięcie obiegu",
+        "Funkcja jeszcze nie jest dostępna",
+        [
+          { text: "Zamknij", onPress: () => console.log("Closed") }
+        ]
+      );
+    }
+
+    const confirmAlert = () => {
+        if (serviceTechnician == '') {
+          ToastAndroid.showWithGravityAndOffset(
+            "Musisz wybrać użytkownika!",
+            ToastAndroid.LONG,
+            ToastAndroid.TOP,
+            25,
+            50
+          );
+          return;
+        }
+
+        if (selectedValue == '-1') {
+          ToastAndroid.showWithGravityAndOffset(
+            "Musisz wybrać rodzaj serwisu!",
+            ToastAndroid.LONG,
+            ToastAndroid.TOP,
+            25,
+            50
+          );
+          return;
+        }
+
+        Alert.alert(
+          "Zapisz serwis",
+          "Czy na pewno chcesz zapisac serwis?",
+          [{
+              text: "Anuluj",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            },
+            {
+              text: "Zapisz",
+              onPress: () => handleSubmit()
+            }
+          ]
+        );
     }
 
     var serviceTechniciansArr = Device.deviceName.split(";");
@@ -133,17 +160,27 @@ function ServiceScreen({route, navigation}) {
         }
       }
 
+
+      
+      var pickerItemsDetailsArr = {
+        4: "kontrola parametrów inicjowana przez MPEC, kontrola przekroczeń, regulacja hydrauliczna",
+        14: "odmulanie, drobne naprawy bez wymiany urządzeń, chemiczne czyszczenie wymienników",
+        28: "wymiana urządzenia, licznika, legalizacja licznika",
+        32: "kontrola parametrów inicjowana przez Odbiorcę, reklamacja, kontrola działania licznika",
+
+      }
+
        return (
           <View style={styles.mainContainer}>      
             <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
             
-              <Picker
-                selectedValue={serviceTechnician}
-                style={styles.picker} 
-                onValueChange={(itemValue, itemIndex) => setServicetechnician(itemValue)}
-              >
-                <Picker.Item label="Wybierz użytkownika" value="" />
-                {serviceTechniciansArr.map(technician => {return <Picker.Item key={technician} label={technician} value={technician} />})}
+            <Picker
+              selectedValue={serviceTechnician}
+              style={styles.picker} 
+              onValueChange={(itemValue, itemIndex) => setServicetechnician(itemValue)}
+            >
+              <Picker.Item label="Wybierz użytkownika" value="" />
+               {serviceTechniciansArr.map(technician => {return <Picker.Item key={technician} label={technician} value={technician} />})}
               </Picker>   
 
               <Picker
@@ -152,17 +189,30 @@ function ServiceScreen({route, navigation}) {
                 onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
               >
                 {Object.keys(pickerItemsArr).map(key => {return <Picker.Item key={pickerItemsArr[key]} label={key} value={pickerItemsArr[key]} />})}
-              </Picker>       
+            </Picker>       
+
+            <Text style={styles.itemsDetails}>{pickerItemsDetailsArr[selectedValue]}</Text>
+
+            <View style={styles.circulationContainer}> 
+            
+            <TouchableOpacity onPress={todoFunction} style={styles.openCirculationTouchable}>
+              <Text style={styles.openCirculationText}>Otwórz obieg</Text>
+            </TouchableOpacity> 
+            
+            <TouchableOpacity onPress={todoFunction} style={styles.closeCirculationTouchable}>
+              <Text style={styles.closeCirculationText}>Zamknij obieg</Text>
+            </TouchableOpacity> 
+            </View>
       
             <TextInput
               onChangeText={onChangeText}
               value={text}
               multiline
-              numberOfLines={4}
+              numberOfLines={3}
               style={styles.input}
             />
 
-            <TouchableOpacity onPress={handleSubmit} style={styles.saveTouchable}>
+            <TouchableOpacity onPress={confirmAlert} style={styles.saveTouchable}>
               <Text style={styles.saveText}>Zapisz serwis</Text>
             </TouchableOpacity> 
           

@@ -78,28 +78,65 @@ const styles = StyleSheet.create({
   saveTouchable: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 50,
+    marginTop: 10,
   },
   saveText: {
     backgroundColor: '#DAF7A6',
     paddingTop: 30,
-    paddingBottom: 30,
+    paddingBottom: 10,
     paddingLeft: 100,
     paddingRight: 100,
     width: "70%",
+  },  
+  circulationContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginBottom: 10,
+    height: 50,
+    width: '100%',
+  },
+  openCirculationTouchable: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  openCirculationText: {
+    backgroundColor: '#DAF7A6',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 50,
+    width: "100%",
+  },
+  closeCirculationTouchable: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeCirculationText: {
+    backgroundColor: 'tomato',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 50,
+    width: "100%",
   },
   picker: {
     width: '70%',
-    height: 150
+    height: 60
   },
   input: {
-    width: '70%',
+    width: '75%',
     padding: 10,
     backgroundColor: '#E5E4E2',
     borderBottomColor: '#ababab',
     borderBottomWidth: 1,
     borderTopColor: '#d4d4d4',
     borderTopWidth: 1,
+  },
+  itemsDetails: {
+    marginBottom: 20,
   }
 });
 
