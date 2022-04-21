@@ -42,19 +42,38 @@ function ServiceScreen({route, navigation}) {
         return;
       }
 
+      if(selectedValue == '-1'){
+        ToastAndroid.showWithGravityAndOffset(
+          "Musisz wybrać rodzaj serwisu!",
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+          25,
+          50
+        );
+        return;
+      }
+
       db.transaction(tx => {
   
-//         tx.executeSql(
-//           'DROP TABLE serwis'
-//         )
+        // tx.executeSql(
+        //   'DROP TABLE serwis'
+        // )
 
         tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, serwisant TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
-        )
+          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, serwisant TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)', [], (tx, results) => {
+              console.log(results);
+          },
+          (tx, error) => {
+            console.log(error);
+          })
   
         tx.executeSql(
-          'INSERT INTO serwis (typ, serwisant, rodzaj, w_id, serwis_id, opis, status, Timestamp) values (1, '+ JSON.stringify(serviceTechnician) +',' + Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + selectedValue + ',' + JSON.stringify(text) + ',0, datetime("now", "localtime"))'
-        ) 
+          'INSERT INTO serwis (typ, serwisant, rodzaj, w_id, serwis_id, opis, status, Timestamp) values (1, '+ JSON.stringify(serviceTechnician) +',' + Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + selectedValue + ',' + JSON.stringify(text) + ',0, datetime("now", "localtime"))', [], (tx, results) => {
+            console.log(results);
+        },
+        (tx, error) => {
+          console.log(error);
+        })
 
         ToastAndroid.showWithGravityAndOffset(
           "Zapisano pomyślnie!",
@@ -82,26 +101,14 @@ function ServiceScreen({route, navigation}) {
 
       if (nodeDetails.split(';;;')[0] == '1' || nodeDetails.split(';;;')[0] == '4') {
         var pickerItemsArr = {
-          "nieokreslony": 1,
-          "awaria": 13,
-          "elektryk": 20,
-          "konserwacja": 14,
-          "kontrola_parametrów": 4,
-          "legalizacja": 5,
-          "licznik": 7,
-          "plan": 24,
-          "płukanie wymienników": 17,
-          "pogotowie": 19,
-          "pogotowie - korekta": 31,
-          "przegląd węzła": 3,
-          "przekroczenia": 23,
-          "reklamacja": 2,
-          "udt": 6,
-          "uwagi": 21,
-          "wymiana urządzenia": 28,
-          "zgłoszenie": 18,
-          "zmiana krzywej": 27,
-          "zmiana parametrów": 26,
+          "Wybierz rodzaj serwisu":-1,
+          "kontrola parametrów":4,
+          "konserwacja":14,
+          "wymiana urządzenia":28,
+          "zgłoszenie przez odbiorcę":32,
+          "przegląd: okresowy, udt":33,
+          "zmiana parametrów regulatora/sterownika":34,
+          "inne":35,
         }
       } else if (nodeDetails.split(';;;')[0] == '2') {
         var pickerItemsArr = {

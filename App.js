@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator();
 
 function LogoTitle() {
   return (
-    <><Text style={{height:100}}><Image source={logo} style={{ width: 50, height: 50,}} /> {'          '} MPEC aplikacja QR wersja 1.0.0</Text></>
+    <><Text style={{height:80}}><Image source={logo} style={{ width: 40, height: 40,}} /> {'          '} MPEC aplikacja QR wersja 1.0.0</Text></>
   );
 }
 
@@ -88,7 +88,7 @@ function HomeScreen({ navigation }) {
         setScanned(true);
 
         if(dataArr[0] == '1' || dataArr[0] == '4') {
-          serviceStartID = '1';
+          serviceStartID = '-1';
         } else if(dataArr[0] == '2') {
           serviceStartID = '8';
         } else if(dataArr[0] == '3') {
@@ -182,7 +182,6 @@ export default function App() {
                 : 'repeat-outline';
               }
 
-              // You can return any component that you like here!
               return <Ionicons name={iconName} size={40} color={color} />;
             },
             tabBarActiveTintColor: 'tomato',
@@ -190,10 +189,11 @@ export default function App() {
             tabBarStyle: { height: '8%' },
             headerTitleAlign: 'center',
             tabBarLabelPosition:'below-icon',
-            tabBarBadgeStyle: { backgroundColor: '#fdfdfd', color:'tomato',  width: 30, height: 30, fontSize:15, alignItems:'center', justifyContent: 'center'},
+            tabBarBadgeStyle: { backgroundColor: 'rgba(220, 219, 220, 0.5)', color:'tomato', alignItems:'center', justifyContent: 'center'},
             headerTitle: (props) => <LogoTitle {...props} />,
           })} 
         >
+          {/* ,  width: 30, height: 30, fontSize:5 do tabBarBadgeStyle */}
 
         <Tab.Screen name="Skaner kodu QR" component={HomeScreen} />        
         <Tab.Screen name="Serwisy" component={ServiceScreen} />
