@@ -57,6 +57,7 @@ function HomeScreen({ navigation }) {
     dataTMP = data;
     var dataArr = data.split(';;;');
     var serviceStartID = '';
+    var serviceItemStartID = '';
     
     if (dataArr.length == 3) {
       if (!(Number.isInteger(Number.parseInt(dataArr[0])) && dataArr[0] > 0)) {
@@ -87,13 +88,8 @@ function HomeScreen({ navigation }) {
         
         setScanned(true);
 
-        if(dataArr[0] == '1' || dataArr[0] == '4') {
-          serviceStartID = '-1';
-        } else if(dataArr[0] == '2') {
-          serviceStartID = '8';
-        } else if(dataArr[0] == '3') {
-          serviceStartID = '8';
-        }          
+        serviceStartID = '-1';
+        serviceItemStartID = '-1';
 
         navigation.navigate('Synchronizacja');
         // navigation.navigate('Przeglądy', {
@@ -101,7 +97,8 @@ function HomeScreen({ navigation }) {
         // });
         navigation.navigate('Serwisy', {
           nodeDetails: data,
-          serviceID: serviceStartID
+          serviceID: serviceStartID,
+          serviceItemID: serviceItemStartID
         });
         
       }
