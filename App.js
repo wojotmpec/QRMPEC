@@ -144,8 +144,22 @@ export default function App() {
   const [toSync, setToSync] = useState(0);
 
   useEffect(() => {    
-    db.transaction(transaction => {
-      transaction.executeSql(`SELECT COUNT(*) AS do_wyslania FROM serwis WHERE status = 0;`,
+    
+    db.transaction(tx => {
+
+//      tx.executeSql(
+//        'DROP TABLE serwis'
+//      )
+
+      tx.executeSql(
+      'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, serwisant TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)', [], (tx, results) => {
+          console.log(results);
+      },
+      (tx, error) => {
+        console.log(error);
+      })
+
+      tx.executeSql(`SELECT COUNT(*) AS do_wyslania FROM serwis WHERE status = 0;`,
       [], (transaction, resultSet) =>{
         setToSync(resultSet.rows._array[0]['do_wyslania']);
       },

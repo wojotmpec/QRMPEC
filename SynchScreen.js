@@ -37,9 +37,9 @@ function SynchScreen({navigation}) {
       var successVal = '0';
       var isData = 0;
       db.transaction(tx => {
-        tx.executeSql(
-          'DROP TABLE serwis'
-        )
+//        tx.executeSql(
+//          'DROP TABLE serwis'
+//        )
         tx.executeSql(
           'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, mistrz TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
         )
