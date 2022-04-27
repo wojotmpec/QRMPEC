@@ -23,6 +23,7 @@ function ServiceScreen({route, navigation}) {
     const [startValue, setStartValue] = useState("");
     const [startItemValue, setStartItemValue] = useState("");
     const [serviceTechnician, setServicetechnician] = useState("");
+    const [pickerItemListArrState, setPickerItemListArrState] = useState({});
     
     useEffect(() => {
       if(startValue != serviceID) {
@@ -71,15 +72,76 @@ function ServiceScreen({route, navigation}) {
       navigation.navigate('Synchronizacja');
     }
 
+    
+    const subServicePickerFun = (itemValue, itemIndex) => {
+      setSelectedServiceValue(itemValue)
+    }
 
-    const todoFunction = () => {
-      Alert.alert(
-        "Otwarcie/zamknięcie obiegu",
-        "Funkcja jeszcze nie jest dostępna",
-        [
-          { text: "Zamknij", onPress: () => console.log("Closed") }
-        ]
-      );
+    const servicePickerFun = (itemValue, itemIndex) => {
+
+      setSelectedValue(itemValue);
+      var pickerItemListArr = {};
+
+      switch(itemValue) {
+        case 1:
+           pickerItemListArr = {
+             "Kontrola parametrów":4,
+             "Przekroczenia":54,
+             "Inne":55,
+           }
+           break;
+         case 2:
+           pickerItemListArr = {
+             "Konserwacja węzła":14,
+             "Chemiczne czyszczenie wymienników":54,
+             "Inne":55,
+           }
+           break;          
+         case 3:
+           pickerItemListArr = {
+             "Wymiana urządzenia":28,
+             "Legalizacja licznika":54,
+             "Inne":55,
+           }
+           break;          
+         case 4:
+           pickerItemListArr = {
+             "Kontrola parametrów":32,
+             "Reklamacja":54,
+             "Kontrola licznika":55,
+             "Pogotowie":56,
+             "Inne":57,
+           }
+           break;
+         case 5:             
+         pickerItemListArr = {
+             "Przegląd okresowy":33,
+             "Przegląd Automatyki":54,
+             "UDT":55,
+             "Inne":56,
+           }
+           break;   
+         case 6:                         
+         pickerItemListArr = {
+             "Zmiana krzywej":34,
+             "Zmiana temp. wyłączenia":54,
+             "Inne":55,
+           }
+           break;                        
+         case 7:                         
+         pickerItemListArr = {
+             "Inne":55,
+           }
+           break;   
+         default:
+           pickerItemListArr = {
+             "Nie wybrano sewrisu":100,
+           }
+           break;   
+       }  
+
+       setPickerItemListArrState(pickerItemListArr);
+
     }
 
     const confirmAlert = () => {
@@ -173,65 +235,7 @@ function ServiceScreen({route, navigation}) {
         5: "Przegląd okresowy, przegląd automatyki, udt",
         6: "Zmiana parametrów regulatora/sterownika",
       }  
-      
-      switch(selectedValue) {
-         case 1:
-            var pickerItemListArr = {
-              "Kontrola parametrów":4,
-              "Przekroczenia":54,
-              "Inne":55,
-            }
-            break;
-          case 2:
-            var pickerItemListArr = {
-              "Konserwacja węzła":14,
-              "Chemiczne czyszczenie wymienników":54,
-              "Inne":55,
-            }
-            break;          
-          case 3:
-            var pickerItemListArr = {
-              "Wymiana urządzenia":28,
-              "Legalizacja licznika":54,
-              "Inne":55,
-            }
-            break;          
-          case 4:
-            var pickerItemListArr = {
-              "Kontrola parametrów":32,
-              "Reklamacja":54,
-              "Kontrola licznika":55,
-              "Pogotowie":56,
-              "Inne":57,
-            }
-            break;
-          case 5:             
-          var pickerItemListArr = {
-              "Przegląd okresowy":33,
-              "Przegląd Automatyki":54,
-              "UDT":55,
-              "Inne":56,
-            }
-            break;   
-          case 6:                         
-          var pickerItemListArr = {
-              "Zmiana krzywej":34,
-              "Zmiana temp. wyłączenia":54,
-              "Inne":55,
-            }
-            break;                        
-          case 7:                         
-          var pickerItemListArr = {
-              "Inne":55,
-            }
-            break;   
-          default:
-            var pickerItemListArr = {
-              "Nie wybrano sewrisu":100,
-            }
-            break;   
-        }  
-
+    
        return (
           <View style={styles.mainContainer}>      
             <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
@@ -248,7 +252,7 @@ function ServiceScreen({route, navigation}) {
             <Picker
               selectedValue={selectedValue}
               style={styles.picker} 
-              onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+              onValueChange={(itemValue, itemIndex) => servicePickerFun(itemValue, itemIndex)}
             >
               <Picker.Item key={-1} color='grey' label={'Wybierz rodzaj serwisu'} value={'-1'} />
               {Object.keys(pickerItemsArr).map(key => {return <Picker.Item key={pickerItemsArr[key]} label={key} value={pickerItemsArr[key]} />})}
@@ -257,12 +261,12 @@ function ServiceScreen({route, navigation}) {
             </Picker>       
 
             <Picker
-              selectedServiceValue={selectedServiceValue}
+              selectedValue={selectedServiceValue}
               style={styles.picker} 
-              onValueChange={(itemValue, itemIndex) => setSelectedServiceValue(itemValue)}              
+              onValueChange={(itemValue, itemIndex) => subServicePickerFun(itemValue, itemIndex)}              
             >
               <Picker.Item key={-1} color='grey' label={'Wybierz'} value={'-1'} />
-              {Object.keys(pickerItemListArr).map(key => {return <Picker.Item key={pickerItemListArr[key]} label={key} value={pickerItemListArr[key]} />})}
+              {Object.keys(pickerItemListArrState).map(key => {return <Picker.Item key={pickerItemListArrState[key]} label={key} value={pickerItemListArrState[key]} />})}
             </Picker>       
 
             <Text style={styles.itemsDetails}>{pickerItemsDetailsArr[selectedValue]}</Text>
