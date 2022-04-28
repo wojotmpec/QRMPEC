@@ -72,6 +72,12 @@ function ServiceScreen({route, navigation}) {
       navigation.navigate('Synchronizacja');
     }
 
+    const cancelAndGoToScan = () =>{
+      setStartValue('');
+      setStartItemValue('');
+      onChangeText('');
+      navigation.navigate('Skaner kodu QR')
+    }
     
     const subServicePickerFun = (itemValue, itemIndex) => {
       setSelectedServiceValue(itemValue)
@@ -267,7 +273,7 @@ function ServiceScreen({route, navigation}) {
             <TouchableOpacity onPress={confirmAlert} style={styles.saveTouchable}>
               <Text style={styles.saveText}>Zapisz serwis</Text>
             </TouchableOpacity> 
-            <TouchableOpacity onPress={() => navigation.navigate('Skaner kodu QR')} style={styles.saveTouchable}>
+            <TouchableOpacity onPress={() => cancelAndGoToScan()} style={styles.saveTouchable}>
               <Text style={styles.cancelText}>Anuluj serwis</Text>
             </TouchableOpacity> 
           
