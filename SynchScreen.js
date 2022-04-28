@@ -41,7 +41,7 @@ function SynchScreen({navigation}) {
 //          'DROP TABLE serwis'
 //        )
         tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, mistrz TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
+          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, mistrz TEXT, rodzaj TEXT, o_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
         )
 
         tx.executeSql('SELECT * FROM serwis WHERE status = 0', [], (trans, result) => {
@@ -51,7 +51,7 @@ function SynchScreen({navigation}) {
             if(values['typ_opcje'] == null) {
               values['typ_opcje'] = '';
             }
-            dataArray.push({ type: values['typ'], typeOptions: values['typ_opcje'], serviceMan: values['serwisant'], rodzaj: values['rodzaj'], wID: values['w_id'], serwisID: values['serwis_id'], opis: values['opis'], status: values['status'], timeService: values['Timestamp']})
+            dataArray.push({ type: values['typ'], typeOptions: values['typ_opcje'], serviceMan: values['serwisant'], rodzaj: values['rodzaj'], oID: values['o_id'], serwisID: values['serwis_id'], opis: values['opis'], status: values['status'], timeService: values['Timestamp']})
             isData = 1;
           }
           console.log(dataArray);

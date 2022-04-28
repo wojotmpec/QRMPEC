@@ -60,7 +60,7 @@ function HomeScreen({ navigation }) {
     var serviceItemStartID = '';
     
     if (dataArr.length == 3) {
-      if (!(Number.isInteger(Number.parseInt(dataArr[0])) && dataArr[0] > 0)) {
+      if (dataArr[0] == '') {
         ToastAndroid.showWithGravityAndOffset(
           "Pierwszy parametr jest nieprawidłowy!",
           ToastAndroid.SHORT,
@@ -152,7 +152,7 @@ export default function App() {
 //      )
 
       tx.executeSql(
-      'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, serwisant TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)', [], (tx, results) => {
+      'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, serwisant TEXT, rodzaj TEXT, o_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)', [], (tx, results) => {
           console.log(results);
       },
       (tx, error) => {

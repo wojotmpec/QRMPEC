@@ -22,7 +22,7 @@ function ServiceScreen({route, navigation}) {
     const [selectedServiceValue, setSelectedServiceValue] = useState(serviceItemID);
     const [startValue, setStartValue] = useState("");
     const [startItemValue, setStartItemValue] = useState("");
-    const [serviceTechnician, setServicetechnician] = useState("");
+    const [serviceTechnician, setServicetechnician] = useState(Device.deviceName);
     const [pickerItemListArrState, setPickerItemListArrState] = useState({});
     
     useEffect(() => {
@@ -40,12 +40,12 @@ function ServiceScreen({route, navigation}) {
 
       db.transaction(tx => {
   
-  //       tx.executeSql(
-  //         'DROP TABLE serwis'
-  //       )
+//         tx.executeSql(
+//           'DROP TABLE serwis'
+//         )
 
         tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, serwisant TEXT, rodzaj INT, w_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)', [], (tx, results) => {
+          'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, serwisant TEXT, rodzaj TEXT, o_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)', [], (tx, results) => {
               console.log(results);
           },
           (tx, error) => {
@@ -53,7 +53,7 @@ function ServiceScreen({route, navigation}) {
           })
   
         tx.executeSql(
-          'INSERT INTO serwis (typ, serwisant, rodzaj, w_id, serwis_id, opis, status, Timestamp) values (1, '+ JSON.stringify(serviceTechnician) +',' + Number.parseInt(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + selectedBaseValue + ',' + JSON.stringify(text) + ',0, datetime("now", "localtime"))', [], (tx, results) => {
+          'INSERT INTO serwis (typ, serwisant, rodzaj, o_id, serwis_id, opis, status, Timestamp) values (1, '+ JSON.stringify(serviceTechnician) +',' + JSON.stringify(nodeDetails.split(';;;')[0]) + ',' + Number.parseInt(nodeDetails.split(';;;')[1]) + ',' + selectedServiceValue + ',' + JSON.stringify(text) + ',0, datetime("now", "localtime"))', [], (tx, results) => {
             console.log(results);
         },
         (tx, error) => {
@@ -79,7 +79,15 @@ function ServiceScreen({route, navigation}) {
 
     const servicePickerFun = (itemValue, itemIndex) => {
 
-      setSelectedServiceValue(-1);
+      if(itemValue == 7) {
+        setSelectedServiceValue(35);
+      } else if(itemValue == 8) {
+          setSelectedServiceValue(100);        
+      } else if(itemValue == 9) {
+          setSelectedServiceValue(101);                  
+      } else {
+        setSelectedServiceValue(-1);
+      }
       setSelectedBaseValue(itemValue);
       var pickerItemListArr = {};
 
@@ -87,56 +95,66 @@ function ServiceScreen({route, navigation}) {
         case 1:
            pickerItemListArr = {
              "Kontrola parametrów":4,
-             "Przekroczenia":54,
-             "Inne":55,
+             "Przekroczenia":23,
+             "Inne":40,
            }
            break;
          case 2:
            pickerItemListArr = {
              "Konserwacja węzła":14,
-             "Chemiczne czyszczenie wymienników":54,
-             "Inne":55,
+             "Chemiczne czyszczenie wymienników":41,
+             "Inne":42,
            }
            break;          
          case 3:
            pickerItemListArr = {
              "Wymiana urządzenia":28,
-             "Legalizacja licznika":54,
-             "Inne":55,
+             "Legalizacja licznika":5,
+             "Inne":43,
            }
            break;          
          case 4:
            pickerItemListArr = {
-             "Kontrola parametrów":32,
-             "Reklamacja":54,
-             "Kontrola licznika":55,
-             "Pogotowie":56,
-             "Inne":57,
+             "Kontrola parametrów":44,
+             "Reklamacja":2,
+             "Kontrola licznika":7,
+             "Pogotowie":19,
+             "Inne":45,
            }
            break;
          case 5:             
          pickerItemListArr = {
              "Przegląd okresowy":33,
-             "Przegląd Automatyki":54,
-             "UDT":55,
-             "Inne":56,
+             "Przegląd Automatyki":46,
+             "UDT":6,
+             "Inne":47,
            }
            break;   
          case 6:                         
          pickerItemListArr = {
-             "Zmiana krzywej":34,
-             "Zmiana temp. wyłączenia":54,
-             "Inne":55,
+             "Zmiana krzywej":48,
+             "Zmiana temp. wyłączenia":49,
+             "Inne":50,
            }
            break;                        
          case 7:                         
          pickerItemListArr = {
-             "Inne":55,
+             "Inne":35,
            }
            break;   
+         case 8:                         
+         pickerItemListArr = {
+            "Otwórz obieg":100,
+          }
+           break;              
+         case 9:                         
+         pickerItemListArr = {
+            "Zamknij obieg":101,
+          }
+           break;                           
          default:
            pickerItemListArr = {
-             "Nie wybrano sewrisu":100,
+             "Nie wybrano sewrisu":500,
            }
            break;   
        }  
@@ -183,9 +201,7 @@ function ServiceScreen({route, navigation}) {
           ]
         );
     }
-
-    var serviceTechniciansArr = Device.deviceName.split(";");
-      
+     
     if(nodeDetails == '') {
       return (
         <View style={styles.emptyView}>
@@ -195,39 +211,16 @@ function ServiceScreen({route, navigation}) {
         </View>);
     } else if(nodeDetails.split(';;;')[0]){
 
-      if (nodeDetails.split(';;;')[0] == '1' || nodeDetails.split(';;;')[0] == '4') {
-        var pickerItemsArr = {          
-          "Kontrola węzła":1,
-          "Konserwacja":2,
-          "Wymiana urządzenia":3,
-          "Zgłoszenie":4,
-          "Przegląd":5,
-          "Zmiana parametrów":6,
-          "Inne":7,
-        }
-      } else if (nodeDetails.split(';;;')[0] == '2') {
-        var pickerItemsArr = {
-          "nieokreslony": 8,
-          "awaria": 15,
-          "konserwacja": 16,
-          "kontrola_parametrów": 10,
-          "odczyt parametrów": 11,
-          "plan": 25,
-          "przegląd komory": 9,
-          "remont": 12,
-          "uwagi": 22,
-        }
-      } 
-
-      /*
-      var pickerItemsDetailsArr = {
-        4: "kontrola parametrów inicjowana przez MPEC, kontrola przekroczeń, regulacja hydrauliczna",
-        14: "odmulanie, drobne naprawy bez wymiany urządzeń, chemiczne czyszczenie wymienników",
-        28: "wymiana urządzenia, licznika, legalizacja licznika",
-        32: "kontrola parametrów inicjowana przez Odbiorcę, reklamacja, kontrola działania licznika",
-
+      var pickerItemsArr = {          
+        "Kontrola węzła":1,
+        "Konserwacja":2,
+        "Wymiana urządzenia":3,
+        "Zgłoszenie":4,
+        "Przegląd":5,
+        "Zmiana parametrów":6,
+        "Inne":7,
       }
-      */
+   
       var pickerItemsDetailsArr = {
         1: "kontrola parametrów inicjowana przez MPEC, kontrola przekroczeń, regulacja hydrauliczna",
         2: "Odmulanie, drobne naprawy bez wymiany urządzeń, chemiczne czyszczenie wymienników",
@@ -239,26 +232,17 @@ function ServiceScreen({route, navigation}) {
     
        return (
           <View style={styles.mainContainer}>      
-            <Text style={styles.addressText}>{nodeDetails.split(';;;')[2]}</Text>
+            <Text style={styles.addressText}>{nodeDetails.split(';;;')[1]+ ', ' + nodeDetails.split(';;;')[0] + '\n' + nodeDetails.split(';;;')[2]}</Text>
             
-            <Picker
-              selectedValue={serviceTechnician}
-              style={styles.picker} 
-              onValueChange={(itemValue, itemIndex) => setServicetechnician(itemValue)}
-            >
-            <Picker.Item label="Wybierz użytkownika" value="" />
-              {serviceTechniciansArr.map(technician => {return <Picker.Item key={technician} label={technician} value={technician} />})}
-            </Picker>   
-
             <Picker
               selectedValue={selectedBaseValue}
               style={styles.picker} 
               onValueChange={(itemValue, itemIndex) => servicePickerFun(itemValue, itemIndex)}
             >
-              <Picker.Item key={-1} color='grey' label={'Wybierz rodzaj serwisu'} value={'-1'} />
+              <Picker.Item key={-1} color='grey' label={'Wybierz rodzaj serwisu'} value={-1} />
               {Object.keys(pickerItemsArr).map(key => {return <Picker.Item key={pickerItemsArr[key]} label={key} value={pickerItemsArr[key]} />})}
-              <Picker.Item color='green' key={8} label={'Otwórz obieg'} value={'8'} />
-              <Picker.Item color='red' key={9} label={'Zamknij obieg'} value={'9'} />
+              <Picker.Item color='green' key={8} label={'Otwórz obieg'} value={8} />
+              <Picker.Item color='red' key={9} label={'Zamknij obieg'} value={9} />
             </Picker>       
 
             <Picker
@@ -282,6 +266,9 @@ function ServiceScreen({route, navigation}) {
 
             <TouchableOpacity onPress={confirmAlert} style={styles.saveTouchable}>
               <Text style={styles.saveText}>Zapisz serwis</Text>
+            </TouchableOpacity> 
+            <TouchableOpacity onPress={() => navigation.navigate('Skaner kodu QR')} style={styles.saveTouchable}>
+              <Text style={styles.cancelText}>Anuluj serwis</Text>
             </TouchableOpacity> 
           
           </View>
