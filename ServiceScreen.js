@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator();
 
 function ServiceScreen({route, navigation}) {
   
-    const { nodeDetails, serviceID, serviceItemID } = route.params;
+    const { nodeDetails, serviceID, serviceItemID, newScanValue } = route.params;
     const [text, onChangeText] = useState("");
     const [selectedBaseValue, setSelectedBaseValue] = useState(serviceID);
     const [selectedServiceValue, setSelectedServiceValue] = useState(serviceItemID);
@@ -24,8 +24,30 @@ function ServiceScreen({route, navigation}) {
     const [startItemValue, setStartItemValue] = useState("");
     const [serviceTechnician, setServicetechnician] = useState(Device.deviceName);
     const [pickerItemListArrState, setPickerItemListArrState] = useState({});
+    const [picker2Color, setPicker2Color] = useState("grey");
+    const [newScan, setNewScan] = useState(newScanValue);
     
     useEffect(() => {
+
+      // if(newScanValue == 'true'){
+      //   console.log('ads')
+        
+      //   if(typeof startValue != "undefined"){
+      //     setNewScan('false');
+      //     setStartValue('');
+      //     setStartItemValue('');
+      //     onChangeText('');
+      //     console.log('first')
+      //     console.log(startValue)
+      //     console.log(startItemValue)
+      //     console.log(text)
+      //   }
+      //   // setStartValue('');
+      //   // setStartItemValue('');
+      //   // onChangeText('');
+      //   // setPicker2Color('grey');
+      // }
+
       if(startValue != serviceID) {
         setSelectedBaseValue(serviceID);           
         setStartValue(serviceID);
@@ -80,6 +102,11 @@ function ServiceScreen({route, navigation}) {
     }
     
     const subServicePickerFun = (itemValue, itemIndex) => {
+      if(itemValue == -1){
+        setPicker2Color("grey");
+      } else {
+        setPicker2Color("black");
+      }
       setSelectedServiceValue(itemValue)
     }
 
@@ -246,17 +273,17 @@ function ServiceScreen({route, navigation}) {
               onValueChange={(itemValue, itemIndex) => servicePickerFun(itemValue, itemIndex)}
             >
               <Picker.Item key={-1} color='grey' label={'Wybierz rodzaj serwisu'} value={-1} />
-              {Object.keys(pickerItemsArr).map(key => {return <Picker.Item key={pickerItemsArr[key]} label={key} value={pickerItemsArr[key]} />})}
+              {Object.keys(pickerItemsArr).map(key => {return <Picker.Item key={pickerItemsArr[key]} color="black" label={key} value={pickerItemsArr[key]} />})}
               <Picker.Item color='green' key={8} label={'Otwórz obieg'} value={8} />
               <Picker.Item color='red' key={9} label={'Zamknij obieg'} value={9} />
-            </Picker>       
+            </Picker>
 
             <Picker
               selectedValue={selectedServiceValue}
               style={styles.picker} 
               onValueChange={(itemValue, itemIndex) => subServicePickerFun(itemValue, itemIndex)}              
             >
-              <Picker.Item key={-1} color='grey' label={'Wybierz'} value={'-1'} />
+              <Picker.Item key={-1} color={picker2Color} label={'Wybierz'} value={'-1'} />
               {Object.keys(pickerItemListArrState).map(key => {return <Picker.Item key={pickerItemListArrState[key]} label={key} value={pickerItemListArrState[key]} />})}
             </Picker>       
 
