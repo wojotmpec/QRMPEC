@@ -25,28 +25,14 @@ function ServiceScreen({route, navigation}) {
     const [serviceTechnician, setServicetechnician] = useState(Device.deviceName);
     const [pickerItemListArrState, setPickerItemListArrState] = useState({});
     const [picker2Color, setPicker2Color] = useState("grey");
-    const [newScan, setNewScan] = useState(newScanValue);
     
-    useEffect(() => {
+    navigation.addListener('focus', () => {
+      setStartValue('');
+      setStartItemValue('');
+      onChangeText('');
+    });  
 
-      // if(newScanValue == 'true'){
-      //   console.log('ads')
-        
-      //   if(typeof startValue != "undefined"){
-      //     setNewScan('false');
-      //     setStartValue('');
-      //     setStartItemValue('');
-      //     onChangeText('');
-      //     console.log('first')
-      //     console.log(startValue)
-      //     console.log(startItemValue)
-      //     console.log(text)
-      //   }
-      //   // setStartValue('');
-      //   // setStartItemValue('');
-      //   // onChangeText('');
-      //   // setPicker2Color('grey');
-      // }
+    useEffect(() => {
 
       if(startValue != serviceID) {
         setSelectedBaseValue(serviceID);           

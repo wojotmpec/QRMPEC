@@ -58,7 +58,6 @@ function HomeScreen({ navigation }) {
     var dataArr = data.split(';;;');
     var serviceStartID = '';
     var serviceItemStartID = '';
-    var newScanValueStart = '';
     
     if (dataArr.length == 3) {
       if (dataArr[0] == '') {
@@ -91,7 +90,6 @@ function HomeScreen({ navigation }) {
 
         serviceStartID = '-1';
         serviceItemStartID = '-1';
-        newScanValueStart = 'true';
 
         navigation.navigate('Synchronizacja');
         // navigation.navigate('Przeglądy', {
@@ -100,8 +98,7 @@ function HomeScreen({ navigation }) {
         navigation.navigate('Serwisy', {
           nodeDetails: data,
           serviceID: serviceStartID,
-          serviceItemID: serviceItemStartID,
-          newScanValue: newScanValueStart
+          serviceItemID: serviceItemStartID
         });
         
       }
