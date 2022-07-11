@@ -165,7 +165,7 @@ function SynchScreen({route, navigation}) {
           
           if(counter > 0) {
             tx.executeSql(
-              'DELETE FROM serwis WHERE status = 1 AND Timestamp < datetime("now", "-2 months" )'               
+              'DELETE FROM serwis WHERE status = 1 AND Timestamp < datetime("now", "-6 months" )'               
             )
           }
         },
