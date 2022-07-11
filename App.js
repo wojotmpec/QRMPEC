@@ -18,8 +18,20 @@ const db = SQLite.openDatabase('db.QRProject')
 const Tab = createBottomTabNavigator();
 
 function LogoTitle() {
+  const [user, setUser] = useState('');
+
+  db.transaction(tx => {   
+      tx.executeSql(`SELECT login FROM uzytkownik_qr;`, [], (transaction, resultSet) =>{
+        if(resultSet.rows._array[0] != null) {
+          let userTMP = resultSet.rows._array[0]['login'];
+          setUser(userTMP);
+        }
+      },
+      (transaction, error) => console.log(error));
+  });
+
   return (
-    <><Text style={{height:80}}><Image source={logo} style={{ width: 40, height: 40,}} /> {'          '} MPEC aplikacja QR wersja 1.0.0</Text></>
+    <><Text style={{height:80}}><Image source={logo} style={{ width: 40, height: 40,}} /> {'          '} QR wersja 1.0.0     {user}</Text></>    
   );
 }
 
@@ -29,9 +41,9 @@ function HomeScreen({ navigation }) {
   const [scanned, setScanned] = useState(false);
   const isFocused = useIsFocused(); 
   var dataTMP = '';    
-  
 
   useEffect(() => {
+
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
@@ -48,7 +60,7 @@ function HomeScreen({ navigation }) {
 
   const handleBarCodeScanned = ({
     type,
-    data
+    data 
   }) => {
 
     if(dataTMP == data) {
@@ -158,6 +170,14 @@ export default function App() {
       (tx, error) => {
         console.log(error);
       })
+
+      tx.executeSql(
+      'CREATE TABLE IF NOT EXISTS uzytkownik_qr (id INTEGER PRIMARY KEY AUTOINCREMENT, nazwa TEXT, login TEXT, dzial TEXT)', [], (tx, results) => {
+          console.log(results);
+      },
+      (tx, error) => {
+        console.log(error);
+      })      
 
       tx.executeSql(`SELECT COUNT(*) AS do_wyslania FROM serwis WHERE status = 0;`,
       [], (transaction, resultSet) =>{
