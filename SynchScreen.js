@@ -158,6 +158,19 @@ function SynchScreen({route, navigation}) {
           'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, serwisant TEXT, mistrz TEXT, rodzaj TEXT, o_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
         )
 
+        var counter = 0;
+        tx.executeSql(`SELECT COUNT(*) AS to_delete FROM serwis WHERE status = 1;`,
+        [], (tx, result) =>{
+          counter = result.rows._array[0]['to_delete'];
+          
+          if(counter > 0) {
+            tx.executeSql(
+              'DELETE FROM serwis WHERE status = 1 AND Timestamp < datetime("now", "-2 months" )'               
+            )
+          }
+        },
+        (tx, error) => console.log(error));
+
         tx.executeSql('SELECT * FROM serwis WHERE status = 0', [], (trans, result) => {
 
           for (let i = 0; i < result.rows.length; ++i) {
