@@ -145,7 +145,7 @@ function HomeScreen({ navigation }) {
       {/* {scanned && <Button style={styles.button} title={'Skanuj nowy obiekt'} onPress={() => setScanned(false)} />}    */}
 
       {scanned && <TouchableOpacity onPress={() => setScanned(false)} style={styles.scanAgainButton}>
-          <Text style={styles.scanAgainText}>Kliknij aby zeskanować nowy obiekt</Text>
+          <Text style={styles.scanAgainText}>Kliknij aby zeskanować {'\n'}nowy obieg</Text>
       </TouchableOpacity>}
 
     </View>
@@ -165,7 +165,7 @@ export default function App() {
 
       tx.executeSql(
       'CREATE TABLE IF NOT EXISTS serwis (id INTEGER PRIMARY KEY AUTOINCREMENT, typ INT, typ_opcje TEXT, serwisant TEXT, rodzaj TEXT, o_id INT, serwis_id INT, opis TEXT, status INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)', [], (tx, results) => {
-          console.log(results);
+          // console.log(results);
       },
       (tx, error) => {
         console.log(error);
@@ -173,7 +173,7 @@ export default function App() {
 
       tx.executeSql(
       'CREATE TABLE IF NOT EXISTS uzytkownik_qr (id INTEGER PRIMARY KEY AUTOINCREMENT, nazwa TEXT, login TEXT, dzial TEXT)', [], (tx, results) => {
-          console.log(results);
+          // console.log(results);
       },
       (tx, error) => {
         console.log(error);
@@ -217,7 +217,7 @@ export default function App() {
             },
             tabBarActiveTintColor: 'tomato',
             tabBarInactiveTintColor: 'gray',
-            tabBarStyle: { height: '8%' },
+            tabBarStyle: { height: '10%' },
             headerTitleAlign: 'center',
             tabBarLabelPosition:'below-icon',
             tabBarBadgeStyle: { backgroundColor: 'rgba(220, 219, 220, 0.5)', color:'tomato', alignItems:'center', justifyContent: 'center'},

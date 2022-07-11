@@ -67,9 +67,13 @@ const styles = StyleSheet.create({
   scanAgainButton: {
     alignItems: 'center',
     justifyContent: 'center',
+    textAlign: 'center',
   },
   scanAgainText: {
     backgroundColor: '#DAF7A6',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
     paddingTop: 40,
     paddingBottom: 40,
     paddingLeft: 50,
@@ -83,18 +87,18 @@ const styles = StyleSheet.create({
   saveText: {
     backgroundColor: '#DAF7A6',
     paddingTop: 30,
-    paddingBottom: 10,
-    paddingLeft: 100,
-    paddingRight: 100,
-    width: "70%",
+    paddingBottom: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
+    // width: "70%",
   },  
   cancelText: {
     backgroundColor: 'tomato',
     paddingTop: 30,
-    paddingBottom: 10,
-    paddingLeft: 100,
-    paddingRight: 100,
-    width: "70%",
+    paddingBottom: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
+    // width: "70%",
   },  
   circulationContainer: {
     alignItems: 'center',
@@ -132,7 +136,11 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: '70%',
-    height: 60
+    height: 60,
+  },
+  pickerItem: {
+    height: 10,
+    transform: [{ scaleX: 0.85 }, { scaleY: 0.85 }],
   },
   input: {
     width: '75%',
@@ -145,6 +153,9 @@ const styles = StyleSheet.create({
   },
   itemsDetails: {
     marginBottom: 20,
+  },
+  buttonsContainer: { 
+    flexDirection: "row",
   }
 });
 

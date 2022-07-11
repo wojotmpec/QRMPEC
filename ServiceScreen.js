@@ -256,12 +256,13 @@ function ServiceScreen({route, navigation}) {
             <Picker
               selectedValue={selectedBaseValue}
               style={styles.picker} 
+              itemStyle={styles.pickerItem}
               onValueChange={(itemValue, itemIndex) => servicePickerFun(itemValue, itemIndex)}
             >
-              <Picker.Item key={-1} color='grey' label={'Wybierz rodzaj serwisu'} value={-1} />
-              {Object.keys(pickerItemsArr).map(key => {return <Picker.Item key={pickerItemsArr[key]} color="black" label={key} value={pickerItemsArr[key]} />})}
-              <Picker.Item color='green' key={8} label={'Otwórz obieg'} value={8} />
-              <Picker.Item color='red' key={9} label={'Zamknij obieg'} value={9} />
+              <Picker.Item style={{fontSize:13}} key={-1} color='grey' label={'Wybierz rodzaj serwisu'} value={-1} />
+              {Object.keys(pickerItemsArr).map(key => {return <Picker.Item style={{fontSize:13}} key={pickerItemsArr[key]} color="black" label={key} value={pickerItemsArr[key]} />})}
+              <Picker.Item style={{fontSize:13}} color='green' key={8} label={'Otwórz obieg'} value={8} />
+              <Picker.Item style={{fontSize:13}} color='red' key={9} label={'Zamknij obieg'} value={9} />
             </Picker>
 
             <Picker
@@ -269,8 +270,8 @@ function ServiceScreen({route, navigation}) {
               style={styles.picker} 
               onValueChange={(itemValue, itemIndex) => subServicePickerFun(itemValue, itemIndex)}              
             >
-              <Picker.Item key={-1} color={picker2Color} label={'Wybierz'} value={'-1'} />
-              {Object.keys(pickerItemListArrState).map(key => {return <Picker.Item key={pickerItemListArrState[key]} label={key} value={pickerItemListArrState[key]} />})}
+              <Picker.Item style={{fontSize:13}} key={-1} color={picker2Color} label={'Wybierz'} value={'-1'} />
+              {Object.keys(pickerItemListArrState).map(key => {return <Picker.Item style={{fontSize:13}} key={pickerItemListArrState[key]} label={key} value={pickerItemListArrState[key]} />})}
             </Picker>       
 
             <Text style={styles.itemsDetails}>{pickerItemsDetailsArr[selectedBaseValue]}</Text>
@@ -283,13 +284,14 @@ function ServiceScreen({route, navigation}) {
               style={styles.input}
             />
 
-            <TouchableOpacity onPress={confirmAlert} style={styles.saveTouchable}>
-              <Text style={styles.saveText}>Zapisz serwis</Text>
-            </TouchableOpacity> 
-            <TouchableOpacity onPress={() => cancelAndGoToScan()} style={styles.saveTouchable}>
-              <Text style={styles.cancelText}>Anuluj serwis</Text>
-            </TouchableOpacity> 
-          
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity onPress={confirmAlert} style={styles.saveTouchable}>
+                <Text style={styles.saveText}>Zapisz serwis</Text>
+              </TouchableOpacity> 
+              <TouchableOpacity onPress={() => cancelAndGoToScan()} style={styles.saveTouchable}>
+                <Text style={styles.cancelText}>Anuluj serwis</Text>
+              </TouchableOpacity> 
+            </View>    
           </View>
         ); 
       } 

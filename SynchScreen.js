@@ -15,17 +15,11 @@ function SynchScreen({route, navigation}) {
     const [userID, setUserID] = useState("");
     const [userItemID, setUserItemID] = useState("-1");
     const [selectedUserValue, setSelectedUserValue] = useState(userItemID);
-    const [picker2Color, setPicker2Color] = useState("grey");
     const [users, setUsers] = useState([]);
 
     const userPickerFun = (itemValue, itemIndex) => {
-      if(itemValue == -1){
-        setPicker2Color("grey");
-      } else {
-        setPicker2Color("black");
-      }
       setSelectedUserValue(itemValue)
-      console.log('PP' + itemValue + 'YY');
+      // console.log('PP' + itemValue + 'YY');
       db.transaction(tx => {
            
         tx.executeSql(
@@ -121,7 +115,7 @@ function SynchScreen({route, navigation}) {
             
             setUsers(usersList);
 
-            console.log(data[0])
+            // console.log(data[0])
 
           }).catch(error => {
           // enter your logic for when there is an error (ex. error toast)
@@ -175,7 +169,7 @@ function SynchScreen({route, navigation}) {
             dataArray.push({ type: values['typ'], typeOptions: values['typ_opcje'], serviceMan: values['serwisant'], rodzaj: values['rodzaj'], oID: values['o_id'], serwisID: values['serwis_id'], opis: values['opis'], status: values['status'], timeService: values['Timestamp']})
             isData = 1;
           }
-          console.log(dataArray);
+          // console.log(dataArray);
           if(isData == 1) {
               let res = fetch('http://hercules8.mpec.krakow.pl/postCreate.php', {
               method: 'POST',
@@ -253,7 +247,7 @@ function SynchScreen({route, navigation}) {
       }) 
     }
 
-    if(userID == '') {
+    if(userID == '' || userID == '-1') {
       return (
         <View  style={styles.syncView}>
 
@@ -263,7 +257,7 @@ function SynchScreen({route, navigation}) {
             onValueChange={(itemValue, itemIndex) => userPickerFun(itemValue, itemIndex)}              
           >
 
-          <Picker.Item key={-1} color={picker2Color} label={'Wybierz użytkownika'} value={'-1'} />
+          <Picker.Item key={-1} label={'Wybierz użytkownika'} value={'-1'} /> 
             {Object.keys(users).map(key => {return <Picker.Item key={users[key]} label={key} value={users[key]} />})}
           </Picker>   
 
