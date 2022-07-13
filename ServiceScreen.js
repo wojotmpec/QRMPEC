@@ -30,6 +30,7 @@ function ServiceScreen({route, navigation}) {
       setStartValue('');
       setStartItemValue('');
       onChangeText('');
+      servicePickerFun("-1", 0);
     });  
 
     useEffect(() => {
@@ -197,6 +198,17 @@ function ServiceScreen({route, navigation}) {
         if (selectedBaseValue == '-1') {
           ToastAndroid.showWithGravityAndOffset(
             "Musisz wybrać rodzaj serwisu!",
+            ToastAndroid.LONG,
+            ToastAndroid.TOP,
+            25,
+            50
+          );
+          return;
+        }
+
+        if (selectedServiceValue == '-1') {
+          ToastAndroid.showWithGravityAndOffset(
+            "Musisz wybrać rodzaj i pozycje serwisu!",
             ToastAndroid.LONG,
             ToastAndroid.TOP,
             25,
